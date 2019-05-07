@@ -15,17 +15,19 @@ import {
   TextInput,
   SafeAreaView,
   TouchableOpacity,
-  Dimensions
 } from 'react-native';
 
 var dimensions = require('Dimensions');//屏幕信息
 var {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽和高
 
-export default class App extends Component<Props> {
+export default class LoginPage extends Component<Props> {
+  static navigationOptions={
+    header:null,//隐藏导航栏
+  };
   render() {
     const {navigation}=this.props;
     return (
-        <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
+        <SafeAreaView style={{flex:1,backgroundColor:'#f5fcff'}}>
           <View style={styles.container}>
             <Image
                 style={styles.circleImg}
@@ -46,7 +48,7 @@ export default class App extends Component<Props> {
             <TouchableOpacity
                 style={styles.button}
                 onPress={()=>{
-                  navigation.navigate('FirstPage')
+                  navigation.navigate('Bottom')
                 }}
             >
               <Text style={styles.loginText}>登录</Text>
@@ -104,7 +106,9 @@ const styles=StyleSheet.create({
     marginLeft:0,
     marginRight:0,
     textAlign: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    borderColor: 'gray',
+    fontSize:16
   },
   button:{
     borderRadius:5,
