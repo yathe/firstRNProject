@@ -78,7 +78,7 @@ export default class SecondPage extends Component<Props>{
                     <View style={styles.searchBgView}>
                         <Image
                             style={styles.searchImg}
-                            source={require('./tick.png')}
+                            source={require('./pictures/tick.png')}
                         />
                         <TextInput
                             style={styles.searchInputText}

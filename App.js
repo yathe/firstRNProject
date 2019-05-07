@@ -66,7 +66,7 @@ export default class App extends Component<Props> {
               </Text>
               <Image
                 style={styles.shareImg}
-                source={require('./wechat.png')}
+                source={require('./pictures/wechat.png')}
               />
               <Image
                 style={styles.shareImg}
