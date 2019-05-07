@@ -21,7 +21,7 @@ export default class SecondPage extends Component<Props>{
       return (
           <TouchableOpacity style={styles.itemView}>
               <Image
-                    source={require('./bawei.png')}
+                    source={require('./pictures/bawei.png')}
                     style={styles.itemImg}
               />
               <View style={styles.itemTextView}>

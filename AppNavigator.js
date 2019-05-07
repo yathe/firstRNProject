@@ -25,7 +25,7 @@ const AppBottomNavigator=createBottomTabNavigator({
       tabBarLabel: '首页',
       tabBarIcon: ({tintColor, focused}) => {
         return <Image
-            source={require('./ic_sheet_tab.png')}//自定义图片
+            source={require('./pictures/ic_sheet_tab.png')}//自定义图片
             style={{width:26,height:26, tintColor: tintColor}}//选中后颜色变成tintcolor
         />
       }
@@ -38,7 +38,7 @@ const AppBottomNavigator=createBottomTabNavigator({
       tabBarLabel:'发现',
       tabBarIcon:({tintColor,focused})=>{
         return <Image
-              source={require('./ic_tab_document.png')}//自定义图片
+              source={require('./pictures/ic_tab_document.png')}//自定义图片
               style={{width: 26,height:26,tintColor:tintColor}}//选中后颜色变成tintcolor
           />
       }
@@ -51,7 +51,7 @@ const AppBottomNavigator=createBottomTabNavigator({
         tabBarLabel:'我的',
         tabBarIcon:({tintColor, focused})=>{
           return <Image
-                  source={require('./ic_tab_me.png')}
+                  source={require('./pictures/ic_tab_me.png')}
                   style={{width:26,height:26,tintColor:tintColor}}
           />
         }
