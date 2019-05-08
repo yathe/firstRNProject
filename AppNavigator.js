@@ -21,7 +21,6 @@ const AppBottomNavigator=createBottomTabNavigator({
   FirstPage:{
     screen:FirstPage,
     navigationOptions: {
-      title:'首页',
       tabBarLabel: '首页',
       tabBarIcon: ({tintColor, focused}) => {
         return <Image
@@ -34,7 +33,6 @@ const AppBottomNavigator=createBottomTabNavigator({
   SecondPage:{
     screen:SecondPage,
     navigationOptions:{
-      title:'发现',
       tabBarLabel:'发现',
       tabBarIcon:({tintColor,focused})=>{
         return <Image
@@ -47,7 +45,6 @@ const AppBottomNavigator=createBottomTabNavigator({
   ThirdPage:{
       screen:ThirdPage,
       navigationOptions:{
-        title :'我的',
         tabBarLabel:'我的',
         tabBarIcon:({tintColor, focused})=>{
           return <Image
@@ -86,26 +83,25 @@ export const AppStackNavigator=createStackNavigator({
   LoginPage:{
     screen:LoginPage
   },
-  FirstPage:{
-    screen:FirstPage,
-    navigationOptions:({navigation})=>({
-      // title: 'FirstPage',
-      header:null
-    }),
-
-  },
-  SecondPage:{
-    screen:SecondPage,
-    navigationOptions:({navigation})=>({
-      title:'SecondPage'
-    }),
-  },
-  ThirdPage:{
-    screen:ThirdPage,
-    navigationOptions:({navigation})=>({
-      title:'Third'
-    })
-  },
+  // FirstPage:{
+  //   screen:FirstPage,
+  //   navigationOptions:({navigation})=>({
+  //
+  //   }),
+  //
+  // },
+  // SecondPage:{
+  //   screen:SecondPage,
+  //   navigationOptions:({navigation})=>({
+  //
+  //   }),
+  // },
+  // ThirdPage:{
+  //   screen:ThirdPage,
+  //   navigationOptions:({navigation})=>({
+  //
+  //   })
+  // },
   Bottom:{
     screen:AppBottomNavigator,
     navigationOptions:{
