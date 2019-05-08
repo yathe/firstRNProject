@@ -14,6 +14,7 @@ import {
 export default class ThirdPage extends Component<Props>{
     static navigationOptions ={
         headerLeft:null,//隐藏左侧返回按键
+        title:'我的'
     };
     _renderItem=(item)=>{//渲染数据
       return (

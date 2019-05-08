@@ -56,11 +56,31 @@ const AppBottomNavigator=createBottomTabNavigator({
           />
         }
       }
-  },},{
+  },
+},{
   tabBarOptions:{
     activeTintColor:'#e36784'
   }
 });
+
+AppBottomNavigator.navigationOptions=({navigation})=>{//可以对具体页的导航栏标题进行修改
+  let {routeName} = navigation.state.routes[navigation.state.index];
+  if (routeName ==='FirstPage'){
+    return {
+      headerTitle:'首页'
+    // header:null
+    }
+
+  } else if (routeName==='SecondPage'){
+    return {
+      headerTitle:'发现'
+    }
+  } else if (routeName === 'ThirdPage'){
+    return {
+      headerTitle:'我的'
+    }
+  }
+};
 
 export const AppStackNavigator=createStackNavigator({
   LoginPage:{
@@ -69,8 +89,10 @@ export const AppStackNavigator=createStackNavigator({
   FirstPage:{
     screen:FirstPage,
     navigationOptions:({navigation})=>({
-      title: 'FirstPage'
+      // title: 'FirstPage',
+      header:null
     }),
+
   },
   SecondPage:{
     screen:SecondPage,
@@ -87,8 +109,10 @@ export const AppStackNavigator=createStackNavigator({
   Bottom:{
     screen:AppBottomNavigator,
     navigationOptions:{
-      title:'BottomNavigator',
+      title:'hh',
+      // header:null,
       headerLeft:null,//隐藏左侧返回按键,bottom也要写
     }
-  }
+  },
+
 });

@@ -15,6 +15,7 @@ import {
 export default class SecondPage extends Component<Props>{
     static navigationOptions ={
         headerLeft:null,//隐藏左侧返回按键
+        title:'发现'
     };
     _flatList;
     _renderItem=(item)=>{//渲染数据
