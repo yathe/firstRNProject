@@ -81,78 +81,77 @@ export default class App extends Component<Props> {
 }
 
 //声明样式
-const styles=StyleSheet.create({
-  container:{
-    flex:1,
-    flexDirection:'column',// 主轴方向是垂直的
-    backgroundColor:'#f5fcff',
-    // alignItems:'center',
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',// 主轴方向是垂直的
+    backgroundColor: '#f5fcff',
+    // alignItems: 'center',
   },
-  circleImg:{
-    // justifyContent:'center',
-    alignSelf:'center',
-    width:100,
-    height:100,
-    borderColor:'white',
-    borderWidth:1,
-    borderRadius:50,
+  circleImg: {
+    // justifyContent: 'center',
+    alignSelf: 'center',
+    width: 100,
+    height: 100,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 50,
     marginTop: 80,
-    marginBottom:35
+    marginBottom: 35,
   },
-  textInput:{
-    marginTop:10,
+  textInput: {
+    marginTop: 10,
     height: 40,
-    marginLeft:0,
-    marginRight:0,
+    marginLeft: 0,
+    marginRight: 0,
     textAlign: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
-  button:{
-    borderRadius:5,
-    marginTop:15,
-    height:40,
-    marginLeft:10,
-    marginRight:10,
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#4398ff',//按键的背景色
-
+  button: {
+    borderRadius: 5,
+    marginTop: 15,
+    height: 40,
+    marginLeft: 10,
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#4398ff',//按键的背景色
   },
-  loginText:{
-    fontSize:18,
+  loginText: {
+    fontSize: 18,
     textAlign: 'center',
-    color:'white',
-    textAlignVertical: 'center'//垂直居中
+    color: 'white',
+    textAlignVertical: 'center',//垂直居中
   },
-  canNot:{
-    marginLeft:10,
-    marginRight:10,
-    marginTop:10,
-    textAlign:'center',
-    color:'#4398ff',
+  canNot: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+    textAlign: 'center',
+    color: '#4398ff',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'//主轴两端对齐
+    justifyContent: 'space-between',//主轴两端对齐
   },
-  share:{
-    alignItems:'center',//内部控件垂直方向居中
-    position:'absolute',//绝对定位
-    left:0,
-    bottom:20,
-    justifyContent:'flex-start',
-    height:60,
-    flexDirection:'row'//内部控件水平排列
+  share: {
+    alignItems: 'center',//内部控件垂直方向居中
+    position: 'absolute',//绝对定位
+    left: 0,
+    bottom: 20,
+    justifyContent: 'flex-start',
+    height: 60,
+    flexDirection: 'row',//内部控件水平排列
   },
-  shareText:{
-    fontSize:15,
-    color:'gray',
-    marginLeft:10,
+  shareText: {
+    fontSize: 15,
+    color: 'gray',
+    marginLeft: 10,
   },
-  shareImg:{
+  shareImg: {
     width: 50,
-    height:50,
-    borderRadius:25,
-    marginLeft:10
+    height: 50,
+    borderRadius: 25,
+    marginLeft: 10
   }
 });
 
