@@ -13,6 +13,7 @@
 @implementation RNMethodTool
 
 RCT_EXPORT_MODULE()
+
 - (NSArray<NSString *>*)supportedEvents {
   return @[@"EventReminder"];
 }
