@@ -41,7 +41,7 @@ export default class SearchInput extends Component {
             <View style={styles.bgView}>
                 <Image
                     style={styles.searchImg}
-                    source={require('./pictures/sousuo.png')}
+                    source={require('./pictures/search.png')}
                 />
                 <TextInput style={styles.searchText}
                            onChangeText={(text) => this.setState({text})}
