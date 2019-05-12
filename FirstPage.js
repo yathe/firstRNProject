@@ -15,7 +15,6 @@ import {
 import Swiper from 'react-native-swiper';
 const {screenWidth} = Dimensions.get('window');//获取屏幕的宽和高
 
-
 export default class FirstPage extends Component<Props>{
     static navigationOptions = {
         headerLeft:null,//隐藏左侧返回按键
@@ -24,22 +23,22 @@ export default class FirstPage extends Component<Props>{
     _flatList;
     renderItem(item) {
         return(
-            <TouchableOpacity style = {styles.itemView}>
+            <TouchableOpacity style={styles.itemView}>
                 <Image
-                    source = {require('./pictures/福字.png')}
-                    style = {{width:90,height:90,alignItems:'center',marginLeft:10,marginRight:10}}
+                    source={require('./pictures/福字.png')}
+                    style={{width:90,height:90,alignItems:'center',marginLeft:10,marginRight:10}}
                 />
-                <View style = {styles.itemDetail}>
+                <View style={styles.itemDetail}>
                     <Text
-                        style = {{fontSize:18,marginTop:5}}
+                        style={{fontSize:18,marginTop:5}}
                     >{item.item.title}
                     </Text>
                     <Text
-                        style = {{fontSize:14,color:'gray',marginTop:8}}
+                        style={{fontSize:14,color:'gray',marginTop:8}}
                     >{item.item.detail}
                     </Text>
                     <Text
-                        style = {{fontSize:16,marginTop:8,marginBottom:5}}
+                        style={{fontSize:16,marginTop:8,marginBottom:5}}
                     >{item.item.description}
                     </Text>
                 </View>
@@ -48,35 +47,34 @@ export default class FirstPage extends Component<Props>{
     };
 
     seperator() {
-      return <View style = {{height:0.2,backgroundColor:'gray'}}>
+      return <View style={{height:0.2,backgroundColor:'gray'}}>
       </View>
     };
 
-    render(){
+    render() {
         var data = [
             {
-            title:'福记饮料配送',
-                detail:'距您0.72千米',
-                description:'配送费¥5.0'
+            title: '福记饮料配送',
+                detail: '距您0.72千米',
+                description: '配送费¥5.0',
             },{
-                title:'诚信粮油',
-                detail:'距您2.72千米',
-                description:'配送费¥5.0'
+                title: '诚信粮油',
+                detail: '距您2.72千米',
+                description: '配送费¥5.0',
             },{
-                title:'新竹市场',
-                detail:'距您2.23千米',
-                description:'配送费¥5.0'
+                title: '新竹市场',
+                detail: '距您2.23千米',
+                description: '配送费¥5.0',
             },{
-                title:'新城粮油干货食材',
-                detail:'距您0.72千米',
-                description:'配送费¥0.0'
+                title: '新城粮油干货食材',
+                detail: '距您0.72千米',
+                description: '配送费¥0.0',
             },{
-                title:'兴业酒店',
-                detail:'距您5.72千米',
-                description:'配送费¥2.0'
+                title: '兴业酒店',
+                detail: '距您5.72千米',
+                description: '配送费¥2.0',
             },
         ];
-
 
         return (
             <SafeAreaView style={{flex:1,backgroundColor:'#f7f7f7'}}>
@@ -97,7 +95,7 @@ export default class FirstPage extends Component<Props>{
                         marginLeft: 3,
                         marginRight: 3,
                         marginTop: 3,
-                        marginBottom: 3
+                        marginBottom: 3,
                     }}/>}
                     paginationStyle={{bottom:1}}>
                     <Image
@@ -213,7 +211,6 @@ export default class FirstPage extends Component<Props>{
                                 免费送菜啦
                             </Text>
                         </View>
-
                     </View>
                     <View style={{flex:1,marginTop: 20,backgroundColor:'white'}}>
                         <FlatList
@@ -225,7 +222,6 @@ export default class FirstPage extends Component<Props>{
                         >
                         </FlatList>
                     </View>
-
             </ScrollView>
             </SafeAreaView>
         )
@@ -233,67 +229,62 @@ export default class FirstPage extends Component<Props>{
 }
 
 const styles = StyleSheet.create({
-    wrapper:{
-        width:screenWidth,
-        height:160
+    wrapper: {
+        width: screenWidth,
+        height: 160,
     },
-
-    slider1:{
-        width:screenWidth,
-        height:160
+    slider1: {
+        width: screenWidth,
+        height: 160,
     },
-    typeView:{
-        backgroundColor:'white',
-        width:screenWidth,
-        height:200,
-        flexDirection:'row',
-        flexWrap:'wrap',
-        justifyContent:'space-between'
+    typeView: {
+        backgroundColor: 'white',
+        width: screenWidth,
+        height: 200,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
     },
-    typeChildView:{
+    typeChildView: {
         width: Dimensions.get('window').width*0.25,
-        height:80,
-        marginTop:8,
-        flexDirection:'column',
-        justifyContent:'center'
+        height: 80,
+        marginTop: 8,
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
-    typeImg:{
+    typeImg: {
         width: 60,
         marginTop: 10,
         height: 60,
-        alignSelf:'center'
+        alignSelf: 'center',
     },
-    typeText:{
-        height:20,
+    typeText: {
+        height: 20,
         marginTop: 5,
-        textAlign: 'center'
+        textAlign: 'center',
     },
-    activityView:{
-        marginTop:20,
-        backgroundColor:'white',
-        height:70,
-        flexDirection:'row',
+    activityView: {
+        marginTop: 20,
+        backgroundColor: 'white',
+        height: 70,
+        flexDirection: 'row',
         // alignItems: 'center'
     },
-    activityDetailView:{
-        backgroundColor:'white',
-        marginTop:5,
-        height:50,
-        flexDirection:'column',
-        alignItems:'flex-start',
+    activityDetailView: {
+        backgroundColor: 'white',
+        marginTop: 5,
+        height: 50,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
     },
-    itemView:{
-
-        backgroundColor:'white',
-        flexDirection:'row',
-        alignItems:'center',
-        height:100
+    itemView: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 100
     },
-    itemDetailView:{
-        flexDirection:'column',
-        justifyContent:'flex-start',
+    itemDetailView: {
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
     }
-
-
-
 });

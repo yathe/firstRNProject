@@ -261,5 +261,5 @@ const styles = StyleSheet.create({
         marginTop:5,
         // height:30,
         // textAlignVertical: 'center'
-    }
+    },
 });

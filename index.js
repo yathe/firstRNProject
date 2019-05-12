@@ -9,7 +9,5 @@ import {APPSwitch} from "./AppNavigator";
 import LoginPage from './LoginPage';
 const AppStackNavigatorContainer=createAppContainer(APPSwitch);
 
-// AppRegistry.registerComponent(appName, () => App);
-// AppRegistry.registerComponent(appName, () => FirstPage);
 AppRegistry.registerComponent(appName, () => AppStackNavigatorContainer);
 AppRegistry.registerComponent('LoginPage',()=>AppStackNavigatorContainer);//导出原生需要使用的界面

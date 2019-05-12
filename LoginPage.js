@@ -22,7 +22,7 @@ var {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽�
 
 export default class LoginPage extends Component<Props> {
   render() {
-    const {navigation}=this.props;
+    const {navigation} = this.props;
     return (
         <SafeAreaView style={{flex:1,backgroundColor:'#f5fcff'}}>
           <View style={styles.container}>
@@ -79,7 +79,7 @@ export default class LoginPage extends Component<Props> {
 }
 
 //声明样式
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
   container:{
     flex:1,
     flexDirection:'column',// 主轴方向是垂直的
@@ -116,7 +116,6 @@ const styles=StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:'#4398ff',//按键的背景色
-
   },
   loginText:{
     fontSize:18,
@@ -153,6 +152,6 @@ const styles=StyleSheet.create({
     height:50,
     borderRadius:25,
     marginLeft:10
-  }
+  },
 });
 

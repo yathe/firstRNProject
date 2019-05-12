@@ -12,7 +12,7 @@ import {
         createAppContainer,
         createSwitchNavigator,// 一次只显示一个页面，默认情况下不做返回处理
         } from "react-navigation";
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {Image} from 'react-native';
 import FirstPage from './FirstPage';
 import LoginPage from './LoginPage';
@@ -20,15 +20,15 @@ import SecondPage from './SecondPage';
 import ThirdPage from './ThirdPage';
 
 const AppBottomNavigator = createBottomTabNavigator({
-  FirstPage:{
+  FirstPage: {
     screen: FirstPage,
     navigationOptions: {
-      // title:'首页',
+      // title: '首页',
       tabBarLabel: '首页',
       tabBarIcon: ({tintColor, focused}) => {
         return (<Image
-            source = {require('./pictures/ic_sheet_tab.png')}//自定义图片
-            style = {{width:26,height:26, tintColor: tintColor}}//选中后颜色变成tintcolor
+            source={require('./pictures/ic_sheet_tab.png')}//自定义图片
+            style={{width:26,height:26, tintColor: tintColor}}//选中后颜色变成tintcolor
         />)
       }
     }
@@ -36,12 +36,12 @@ const AppBottomNavigator = createBottomTabNavigator({
   SecondPage:{
     screen: SecondPage,
     navigationOptions: {
-      // title:'发现',
+      // title: '发现',
       tabBarLabel: '发现',
       tabBarIcon: ({tintColor,focused}) => {
         return (<Image
-              source = {require('./pictures/ic_tab_document.png')}//自定义图片
-              style = {{width: 26,height:26,tintColor:tintColor}}//选中后颜色变成tintcolor
+              source={require('./pictures/ic_tab_document.png')}//自定义图片
+              style={{width: 26,height:26,tintColor:tintColor}}//选中后颜色变成tintcolor
           />)
       }
     }
@@ -49,12 +49,12 @@ const AppBottomNavigator = createBottomTabNavigator({
   ThirdPage: {
       screen: ThirdPage,
       navigationOptions: {
-        // title :'我的',
+        // title : '我的',
         tabBarLabel: '我的',
         tabBarIcon: ({tintColor, focused}) => {
           return <Image
-                  source = {require('./pictures/ic_tab_me.png')}
-                  style = {{width:26,height:26,tintColor:tintColor}}
+                  source={require('./pictures/ic_tab_me.png')}
+                  style={{width:26,height:26,tintColor:tintColor}}
           />
         }
       }
@@ -70,9 +70,8 @@ AppBottomNavigator.navigationOptions = ({navigation}) => {//可以对具体页�
   if (routeName === 'FirstPage') {
     return {
       headerTitle: '首页'
-    // header:null
+    // header: null
     }
-
   } else if (routeName === 'SecondPage') {
     return {
       headerTitle: '发现'

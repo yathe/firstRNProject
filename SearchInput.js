@@ -7,7 +7,6 @@ import {
     Keyboard
 } from "react-native";
 
-
 export default class SearchInput extends Component {
     constructor(props) {
         super(props);
