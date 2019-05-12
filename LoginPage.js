@@ -21,9 +21,6 @@ var dimensions = require('Dimensions');//屏幕信息
 var {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽和高
 
 export default class LoginPage extends Component<Props> {
-  static navigationOptions={
-    header:null,//隐藏导航栏
-  };
   render() {
     const {navigation}=this.props;
     return (

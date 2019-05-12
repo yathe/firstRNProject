@@ -6,6 +6,8 @@
  * @flow
  */
 
+'use strict';
+
 import React, {Component} from 'react';
 import {
   Text,
@@ -18,8 +20,7 @@ import {
   Dimensions
 } from 'react-native';
 
-var dimensions = require('Dimensions');//屏幕信息
-var {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽和高
+const {screenWidth,screenHeight} = Dimensions.get('window');//获取屏幕的宽和高
 
 export default class App extends Component<Props> {
   render() {

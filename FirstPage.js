@@ -17,29 +17,29 @@ const {screenWidth} = Dimensions.get('window');//获取屏幕的宽和高
 
 
 export default class FirstPage extends Component<Props>{
-    static navigationOptions ={
+    static navigationOptions = {
         headerLeft:null,//隐藏左侧返回按键
-        title:'首页'
+        // title:'首页'
     };
     _flatList;
-    _renderItem=(item)=>{
+    renderItem(item) {
         return(
-            <TouchableOpacity style={styles.itemView}>
+            <TouchableOpacity style = {styles.itemView}>
                 <Image
-                    source={require('./pictures/福字.png')}
-                    style={{width:90,height:90,alignItems:'center',marginLeft:10,marginRight:10}}
+                    source = {require('./pictures/福字.png')}
+                    style = {{width:90,height:90,alignItems:'center',marginLeft:10,marginRight:10}}
                 />
-                <View style={styles.itemDetail}>
+                <View style = {styles.itemDetail}>
                     <Text
-                        style={{fontSize:18,marginTop:5}}
+                        style = {{fontSize:18,marginTop:5}}
                     >{item.item.title}
                     </Text>
                     <Text
-                        style={{fontSize:14,color:'gray',marginTop:8}}
+                        style = {{fontSize:14,color:'gray',marginTop:8}}
                     >{item.item.detail}
                     </Text>
                     <Text
-                        style={{fontSize:16,marginTop:8,marginBottom:5}}
+                        style = {{fontSize:16,marginTop:8,marginBottom:5}}
                     >{item.item.description}
                     </Text>
                 </View>
@@ -47,8 +47,8 @@ export default class FirstPage extends Component<Props>{
         )
     };
 
-    _seperator=()=>{
-      return <View style={{height:0.2,backgroundColor:'gray'}}>
+    seperator() {
+      return <View style = {{height:0.2,backgroundColor:'gray'}}>
       </View>
     };
 
@@ -78,7 +78,7 @@ export default class FirstPage extends Component<Props>{
         ];
 
 
-        return(
+        return (
             <SafeAreaView style={{flex:1,backgroundColor:'#f7f7f7'}}>
                 <ScrollView
                     horizontal={false}//垂直滚动
@@ -218,9 +218,9 @@ export default class FirstPage extends Component<Props>{
                     <View style={{flex:1,marginTop: 20,backgroundColor:'white'}}>
                         <FlatList
                             ref = {(flatList)=>this._flatList = flatList}
-                            ItemSeparatorComponent={this._seperator}
-                            renderItem={this._renderItem}
-                            data={data}
+                            ItemSeparatorComponent={this.seperator}// 分割线
+                            renderItem={this.renderItem}// 解析数据
+                            data={data}//数据源
                             keyExtractor={(item,index)=>index.toString()}
                         >
                         </FlatList>
