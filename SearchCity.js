@@ -40,6 +40,7 @@ export default class SearchCity extends Component<Props>{
             {title: '丽江市'}
         ].map((item, index) => {
             item.id = index;
+            item.chosen = false;
             return item;
         });
 
@@ -53,11 +54,28 @@ export default class SearchCity extends Component<Props>{
         header: null,
     })
 
+    onPressHandler = (itemId) => {
+        const data = this.state.data.map((it, index) => {
+            if(it.id == itemId) {
+                it.chosen = true;
+            } else {
+                it.chosen = false;
+            }
+            return it;
+        });
+
+        this.setState({
+            activeId: itemId,
+            data
+        });
+    }
+
     renderItem = (item) => {
 
         if (item.isOne) {
             return (
                 <TouchableOpacity key={item.id} onPress={() => {
+                    this.onPressHandler(item.id)
                     alert('定位')
                 }}>
                     <View style={styles.itemView}>
@@ -66,21 +84,20 @@ export default class SearchCity extends Component<Props>{
                             style={{width: 10, height: 18, marginRight: 2}}
                             resizeMode='stretch'// 图片可以铺满
                         />
-                        <Text
-                            style={{marginTop: 10,
+                        <Text style={{
+                                marginTop: 10,
                                 marginBottom: 10,
                                 alignSelf: 'center',
                                 textAlign: 'center',
-                                color: 'gray',}}
-                        >{item.title}</Text>
+                                color: 'gray'
+                        }}>{item.title}</Text>
                     </View>
                 </TouchableOpacity>
             )
         }
         return (
             <TouchableOpacity key={item.id} onPress={() => {
-                console.log(item.id)
-                this.setState({activeId: item.id})
+                this.onPressHandler(item.id)
             }}>
                 <View style={styles.itemView}>
                     <Text
@@ -89,7 +106,7 @@ export default class SearchCity extends Component<Props>{
                             marginBottom: 10,
                             alignSelf: 'center',
                             textAlign: 'center',
-                            color: this.state.activeId == item.id ? 'green': 'gray'
+                            color: item.chosen ? 'green': 'gray'
                         }}
                     >{item.title}</Text>
                 </View>
@@ -152,6 +169,7 @@ export default class SearchCity extends Component<Props>{
                                 data={this.state.data}
                                 itemsPerRow={3}
                                 keyExtractor={(item, index)=>index.toString()}
+                                itemHasChanged={(it1, it2) => it1.chosen !== it2.chosen}
                             >
                             </Grid>
                         </View>
