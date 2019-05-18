@@ -16,56 +16,7 @@ let {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽�
 export default class SearchCity extends Component<Props>{
     constructor(props) {
         super(props);
-        this.state = {
-            isClicked: false,
-        };
-    }
-    static navigationOptions = ({
-        header: null,
-    })
-
-    renderItem = (item, itemId) => {
-        if (item.isOne) {
-            return (
-                <TouchableOpacity onPress={() => {
-                   alert('定位')
-                }}>
-                    <View style={styles.itemView}>
-                        <Image
-                            source={require('./pictures/location.jpg')}
-                            style={{width: 10, height: 18, marginRight: 2}}
-                            resizeMode='stretch'// 图片可以铺满
-                        />
-                        <Text
-                            style={{marginTop: 10,
-                            marginBottom: 10,
-                            alignSelf: 'center',
-                            textAlign: 'center',
-                            color: 'gray',}}
-                        >{item.title}</Text>
-                    </View>
-                </TouchableOpacity>
-            )
-        }
-        return (
-            <TouchableOpacity onPress={() => {
-                this.setState({[itemId]: !this.state[itemId]})
-            }}>
-                <View style={styles.itemView}>
-                    <Text
-                        style={{marginTop: 10,
-                        marginBottom: 10,
-                        alignSelf: 'center',
-                        textAlign: 'center',
-                        color: this.state[itemId] ? 'green': 'gray',}}
-                    >{item.title}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
-
-    render() {
-        let data = [
+        const data = [
             {isOne:true, title: '定位'},
             {title: '北京市'},
             {title: '上海市'},
@@ -87,15 +38,105 @@ export default class SearchCity extends Component<Props>{
             {title: '武汉市'},
             {title: '天津市'},
             {title: '丽江市'}
-        ];
+        ].map((item, index) => {
+            item.id = index;
+            return item;
+        });
 
-        // data.map((item, index) => {
-        //     this.setState({
-        //         index: false
-        //     });
-        // });
+        this.state = {
+            // isClicked: false,
+            data,
+            activeId: null
+        };
+    }
+    static navigationOptions = ({
+        header: null,
+    })
 
+    renderItem = (item) => {
+
+        if (item.isOne) {
+            return (
+                <TouchableOpacity key={item.id} onPress={() => {
+                    alert('定位')
+                }}>
+                    <View style={styles.itemView}>
+                        <Image
+                            source={require('./pictures/location.jpg')}
+                            style={{width: 10, height: 18, marginRight: 2}}
+                            resizeMode='stretch'// 图片可以铺满
+                        />
+                        <Text
+                            style={{marginTop: 10,
+                                marginBottom: 10,
+                                alignSelf: 'center',
+                                textAlign: 'center',
+                                color: 'gray',}}
+                        >{item.title}</Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        }
         return (
+            <TouchableOpacity key={item.id} onPress={() => {
+                console.log(item.id)
+                this.setState({activeId: item.id})
+            }}>
+                <View style={styles.itemView}>
+                    <Text
+                        style={{
+                            marginTop: 10,
+                            marginBottom: 10,
+                            alignSelf: 'center',
+                            textAlign: 'center',
+                            color: this.state.activeId == item.id ? 'green': 'gray'
+                        }}
+                    >{item.title}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    // componentWillMount() {
+
+
+    //     let state = {}
+
+    //     data.forEach((item, index) => {
+    //         state[index] = false
+    //     });
+
+    //     this.setState({
+    //         data,
+    //         ...state
+    //     })
+    // }
+
+    render() {
+
+        // let data = [
+        //     '定位',
+        //     '北京市',
+        //     '上海市',
+        //     '苏州市',
+        //     '郑州市',
+        //     '西安市',
+        //     '南京市',
+        //     '昆明市',
+        //     '赤峰市',
+        //     '随州市',
+        //     '邵阳市',
+        //     '临沂市',
+        //     '拉萨市',
+        //     '呼和浩特市',
+        //     '成都市',
+        //     '深圳市',
+        //     '广州市',
+        //     '沈阳市',
+        //     '武汉市',
+        //     '天津市',
+        //     '丽江市'];
+        return(
             <SafeAreaView style={styles.container}>
                 <View style={styles.container}>
                     <View style={{marginTop: 30, marginLeft: 15, marginBottom: 30,}}>
@@ -108,11 +149,11 @@ export default class SearchCity extends Component<Props>{
                         <View style={{flex: 1, marginTop: 20}}>
                             <Grid
                                 renderItem={this.renderItem}
-                                data={data}
+                                data={this.state.data}
                                 itemsPerRow={3}
                                 keyExtractor={(item, index)=>index.toString()}
                             >
-                        </Grid>
+                            </Grid>
                         </View>
                     </View>
                 </View>
