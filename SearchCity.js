@@ -61,7 +61,7 @@ export default class SearchCity extends Component<Props>{
             } else {
                 it.chosen = false;
             }
-            return it;
+            return it
         });
 
         this.setState({
@@ -169,7 +169,7 @@ export default class SearchCity extends Component<Props>{
                                 data={this.state.data}
                                 itemsPerRow={3}
                                 keyExtractor={(item, index)=>index.toString()}
-                                itemHasChanged={(it1, it2) => it1.chosen !== it2.chosen}
+                                itemHasChanged={(it1, it2) => it1.chosen == it2.chosen}
                             >
                             </Grid>
                         </View>
