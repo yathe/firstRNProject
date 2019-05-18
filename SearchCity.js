@@ -24,7 +24,7 @@ export default class SearchCity extends Component<Props>{
         header: null,
     })
 
-    renderItem = (item) => {
+    renderItem = (item, itemId) => {
         if (item.isOne) {
             return (
                 <TouchableOpacity onPress={() => {
@@ -49,7 +49,7 @@ export default class SearchCity extends Component<Props>{
         }
         return (
             <TouchableOpacity onPress={() => {
-                this.setState({itemId: !this.state.itemId})
+                this.setState({[itemId]: !this.state[itemId]})
             }}>
                 <View style={styles.itemView}>
                     <Text
@@ -57,7 +57,7 @@ export default class SearchCity extends Component<Props>{
                         marginBottom: 10,
                         alignSelf: 'center',
                         textAlign: 'center',
-                        color: this.state.itemId ? 'green': 'gray',}}
+                        color: this.state[itemId] ? 'green': 'gray',}}
                     >{item.title}</Text>
                 </View>
             </TouchableOpacity>
@@ -86,38 +86,16 @@ export default class SearchCity extends Component<Props>{
             {title: '沈阳市'},
             {title: '武汉市'},
             {title: '天津市'},
-            {title: '丽江市'}];
+            {title: '丽江市'}
+        ];
 
-        data.map((item, index) => {
-            this.setState({
-                index: false
-            });
-        });
+        // data.map((item, index) => {
+        //     this.setState({
+        //         index: false
+        //     });
+        // });
 
-
-        // let data = [
-        //     '定位',
-        //     '北京市',
-        //     '上海市',
-        //     '苏州市',
-        //     '郑州市',
-        //     '西安市',
-        //     '南京市',
-        //     '昆明市',
-        //     '赤峰市',
-        //     '随州市',
-        //     '邵阳市',
-        //     '临沂市',
-        //     '拉萨市',
-        //     '呼和浩特市',
-        //     '成都市',
-        //     '深圳市',
-        //     '广州市',
-        //     '沈阳市',
-        //     '武汉市',
-        //     '天津市',
-        //     '丽江市'];
-        return(
+        return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.container}>
                     <View style={{marginTop: 30, marginLeft: 15, marginBottom: 30,}}>
