@@ -14,39 +14,45 @@ import {
 import ScrollableTabView, {DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import SearchInput from './SearchInput';// 导入搜索栏
 
-// var URL = "https://api.douban.com/v2/movie/in_theaters";
-// var URL = "https://api.github.com/search/repositories/q=a";
-
 export default class SecondPage extends Component<Props>{
     static navigationOptions = {
         headerLeft:null,//隐藏左侧返回按键
         title:'发现'
-    };
+    }
 
     constructor(props) {
         super(props);
         this.state = {// 初始状态
-            // data: [],
             loaded: false,
             movies: [],
             comings: [],
         };
-        this.fetchData = this.fetchData.bind(this);// 生命周期以外的方法要绑定
-        this.getSearchWord = this.getSearchWord.bind(this);// 生命周期以外的方法要绑定
+        // 生命周期以外的方法要绑定(用了箭头函数可以不绑定)
+        // this.fetchData = this.fetchData.bind(this);
+        // this.changeData = this.changeData.bind(this);
+        // this.getSearchWord = this.getSearchWord.bind(this);
     }
 
-    componentDidMount() {
-        this.fetchData("https://api.douban.com/v2/movie/in_theaters");
-        this.fetchData2("https://api.douban.com/v2/movie/coming_soon");
+    async componentDidMount() {
+        try {
+            const json = await this.fetchData("in_theaters");
+            this.setState({
+                movies: json,
+            });
+        } catch (e) {
+            console.error(e);
+        }
     }
 
-    fetchData(URL) {
+    fetchData = (type) => {
+        URL = `https://api.douban.com/v2/movie/${type}`;
+        let arrList = [];
         fetch(URL)
             .then((response) => response.json())
             .then((responseData) => {
                 let arrData = responseData.subjects;
                 let i = 0;
-                let arrList = [];
+
                 /* 直接赋值的话没有 key 键,就会发出警告,所以为了避免出现警告,应主动在每个项目中添加 key 键 */
                 arrData.map(item => {
                     arrList.push({
@@ -57,57 +63,61 @@ export default class SecondPage extends Component<Props>{
                 });
                 const now = this.state;
                 this.setState({
-                    movies: arrList,
                     loaded: true,
-                })
+                });
             }).catch((error) => {
                 console.error(error);
         });
-    };
+        return arrList;//之前把return写在then里面，没有返回数据
+    }
 
-    fetchData2(URL) {
-        fetch(URL)
-            .then((response) => response.json())
-            .then((responseData) => {
-                let arrData = responseData.subjects;
-                let i = 0;
-                let arrList = [];
-                /* 直接赋值的话没有 key 键,就会发出警告,所以为了避免出现警告,应主动在每个项目中添加 key 键 */
-                arrData.map(item => {
-                    arrList.push({
-                        key: i,
-                        value: item,
-                    });
-                    i++;
-                });
-                const now = this.state;
-                this.setState({
-                    comings: arrList,
-                    loaded: true,
-                })
-            }).catch((error) => {
+    changeData = async(obj) => {
+        try {
+            let type = '';
+            let detail = '';
+            const {i} = obj;
+            if (i === 0) {
+                type = 'in_theaters';
+                detail = 'movies';
+            } else if (i === 1) {
+                type = 'coming_soon';
+                detail = 'comings';
+            }
+            const json = await this.fetchData(type);
+            this.setState({
+                [detail]: json
+            });
+        } catch (error) {
             console.error(error);
-        });
-    };
+        }
+    }
 
-    getSearchWord(val) {// 子组件传递val值给父组件
+    getSearchWord = (val) => {// 子组件传递val值给父组件
         const {movies} = this.state;
         this.setState({
             movies: movies.splice(1,6)
             // movies: val
             }
-        );
+        )
+    }
+
+    fetchMore = () => {
+
     }
 
     renderItem(item) {//渲染数据
         return (
             <TouchableOpacity style={styles.itemView}
                               onPress={() => {// 调用系统浏览器
-                                  var url = 'http://baidu.com';
-                                  Linking.openURL(url)
-                                      .catch((err) => {
-                                          console.log('error occurred')
-                                      });
+                                  // alert('1323');//弹窗
+                                  // var url = 'http://baidu.com';
+                                  // Linking.openURL(url)
+                                  //     .catch((err) => {
+                                  //         console.log('error occurred')
+                                  //     });
+                                  navigate('Detail', {
+                                      id: item.item.value.id
+                                  })
                               }}>
                 <Image
                     style={styles.itemImg}
@@ -126,12 +136,14 @@ export default class SecondPage extends Component<Props>{
 
                 </View>
             </TouchableOpacity>
-        );
+        )
     }
 
     separator() {//分隔线
-        return <View style={{height:0.2,backgroundColor:'gray'}}>
-        </View>
+        return (
+            <View style={{height:0.2,backgroundColor:'gray'}}>
+            </View>
+        )
     }
 
     renderLoadingView() {
@@ -141,15 +153,14 @@ export default class SecondPage extends Component<Props>{
                     loading messages..
                 </Text>
             </View>
-        );
+        )
     }
 
     render() {
         const {navigate} = this.props.navigation;
-        const {movies} = this.state;
-        const {comings} = this.state;
+        const {movies, comings} = this.state;
         if (!this.state.loaded) {
-            return this.renderLoadingView;
+            return this.renderLoadingView;n
         }
 
         return (
@@ -175,6 +186,8 @@ export default class SecondPage extends Component<Props>{
                         tabBarInactiveTextColor='#959595'
                         tabBarTextStyle={{fontSize: 15, textAlignVertical: 'center'}}
                         locked={false}
+                        onChangeTab={(i)=>this.changeData(i)}
+                        // 滑动界面时i改变
                     >
                         {/*几个view就有几个滑动页面*/}
                         <View tabLabel='正在热映'
@@ -198,6 +211,8 @@ export default class SecondPage extends Component<Props>{
                                 data = {comings}
                                 renderItem={this.renderItem}
                                 handleMethod = {({viewableItems}) => this.handleViewableItemsChanged(viewableItems)}
+                                onEndReached={this.fetchMore}//加载更多
+                                onEndReachedThreshold={0.1}//距离底部倍数时触发onEndReached
                                 keyExtractor={(item,index)=>index.toString()}
                                 // 每个cell一个独一无二的key值，加上toString()后不警告
                             >

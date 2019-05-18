@@ -21,7 +21,7 @@ export default class FirstPage extends Component<Props>{
         // title:'首页'
     };
     _flatList;
-    renderItem(item) {
+    renderItem = (item) => {
         return(
             <TouchableOpacity style={styles.itemView}>
                 <Image
@@ -46,13 +46,13 @@ export default class FirstPage extends Component<Props>{
         )
     };
 
-    seperator() {
+    seperator = () => {
       return <View style={{height:0.2,backgroundColor:'gray'}}>
       </View>
     };
 
     render() {
-        var data = [
+        let data = [
             {
             title: '福记饮料配送',
                 detail: '距您0.72千米',
@@ -100,14 +100,17 @@ export default class FirstPage extends Component<Props>{
                     paginationStyle={{bottom:1}}>
                     <Image
                         style={styles.slider1}
+                        resizeMode='stretch'// 图片可以铺满
                         source={require('./pictures/ad1.jpg')}
                     />
                     <Image
                         style={styles.slider1}
+                        resizeMode='stretch'// 图片可以铺满
                         source={require('./pictures/ad5.jpg')}
                     />
                     <Image
                         style={styles.slider1}
+                        resizeMode='stretch'// 图片可以铺满
                         source={require('./pictures/ad6.jpg')}
                     />
                 </Swiper>

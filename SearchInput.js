@@ -15,10 +15,10 @@ export default class SearchInput extends Component {
             data: [],
             // flag: null,
         };
-        this.search = this.search.bind(this);// 生命周期以外的方法要绑定
+        // this.search = this.search.bind(this);// 生命周期以外的方法要绑定
     }
 
-    search() {
+    search = () => {
         const { text } = this.state;
         Keyboard.dismiss();
         // clearTimeout(this.state.flag)
@@ -55,26 +55,26 @@ export default class SearchInput extends Component {
 
 const styles  = StyleSheet.create({
     bgView: {//外层的搜索框
-        // flex:1, //错误效果
+        // flex: 1, //错误效果
         height: 40,
         flexDirection: 'row',
         marginLeft: 10,
         marginRight: 10,
         alignItems: 'center',
-        backgroundColor:'#E6E7E8',
-        borderRadius:8,
+        backgroundColor: '#E6E7E8',
+        borderRadius: 8,
     },
     searchImg: {// 搜索图标
         width: 25,
         height: 25,
         marginLeft: 10,
-        // paddingLeft:10,//无效
+        // paddingLeft: 10,//无效
     },
     searchText: {//搜索框
         flex: 1,//搜索框可以平铺完剩下的宽度
-        marginLeft:10,//相对searchImg的距离【子控件间的相对距离】
+        marginLeft: 10,//相对searchImg的距离【子控件间的相对距离】
         paddingRight: 10,//距外层搜索框的右距离
-        paddingTop:10,
-        paddingBottom:10,
+        paddingTop: 10,
+        paddingBottom: 10,
     },
 });

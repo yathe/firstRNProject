@@ -19,7 +19,7 @@ export default class ThirdPage extends Component<Props>{
         headerLeft:null,//隐藏左侧返回按键
         title:'我的'
     };
-    renderItem(item) {//渲染数据，第二个section
+    renderItem = (item) => {//渲染数据，第二个section
       return (
           <TouchableOpacity style={styles.itemView}>
               <Text style={{marginLeft: 15,fontSize: 16}}>
@@ -29,7 +29,7 @@ export default class ThirdPage extends Component<Props>{
       )
     };
 
-    renderItem1(item) {//渲染数据，第一个section
+    renderItem1 = (item) => {//渲染数据，第一个section
         return (
             <TouchableOpacity style={styles.imgView}>
                 <Image
@@ -43,7 +43,7 @@ export default class ThirdPage extends Component<Props>{
         )
     };
 
-    renderItem2(item) {//渲染数据，第三个section
+    renderItem2 = (item) => {//渲染数据，第三个section
         return (
             <TouchableOpacity style={styles.itemV}
                               onPress={()=>{
@@ -61,16 +61,18 @@ export default class ThirdPage extends Component<Props>{
         )
     };
 
-    sectionItem(item) {
+    sectionItem = (item) => {
         return (
             <View style={{height:30,backgroundColor:'#f7f7f7'}}>
             </View>
         )
     };
 
-    separator() {//分隔线
-        return <View style={{height:0.2,backgroundColor:'gray'}}>
-                </View>
+    separator = () => {//分隔线
+        return (
+            <View style={{height:0.2,backgroundColor:'gray'}}>
+            </View>
+        )
     };
 
     render() {
