@@ -11,7 +11,7 @@
 
 发现页
 
-![image](https://github.com/yathe/firstRNProject/blob/master/pictures/second.png)
+![image](https://github.com/yathe/firstRNProject/blob/master/pictures/newSecond.png)
 
 个人中心页
 
