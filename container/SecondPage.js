@@ -12,7 +12,7 @@ import {
     Linking,
 } from 'react-native';
 import ScrollableTabView, {DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import SearchInput from './SearchInput';// 导入搜索栏
+import SearchInput from '../tool/SearchInput';// 导入搜索栏
 
 export default class SecondPage extends Component<Props>{
     static navigationOptions = {
@@ -160,13 +160,14 @@ export default class SecondPage extends Component<Props>{
         const {navigate} = this.props.navigation;
         const {movies, comings} = this.state;
         if (!this.state.loaded) {
-            return this.renderLoadingView;n
+            return this.renderLoadingView;
         }
 
         return (
             <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
                 <View style={styles.container}>
                     <SearchInput
+                        name='second'
                         navigation={this.props.navigation}// 通过this.props把属性传给子组件
                         getSearchWord={this.getSearchWord}
                     />

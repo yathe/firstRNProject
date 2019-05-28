@@ -34,7 +34,7 @@ export default class ThirdPage extends Component<Props>{
             <TouchableOpacity style={styles.imgView}>
                 <Image
                     style={{marginLeft: 15, width: 90, height: 90}}
-                    source={require('./pictures/pic.png')}
+                    source={require('../pictures/pic.png')}
                 />
                 <Text style={{marginLeft: 15,fontSize: 18}}>
                     {item.item.title}

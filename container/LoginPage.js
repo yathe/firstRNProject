@@ -94,7 +94,7 @@ export default class LoginPage extends Component<Props> {
               <View style={styles.container}>
                   <Image
                       style={styles.circleImg}
-                      source={require('./pictures/pic.png')}
+                      source={require('../pictures/pic.png')}
                   />
                   {/*头像*/}
                   <TextInput
@@ -134,11 +134,11 @@ export default class LoginPage extends Component<Props> {
                       </Text>
                       <Image
                           style={styles.shareImg}
-                          source={require('./pictures/wechat.png')}
+                          source={require('../pictures/wechat.png')}
                       />
                       <Image
                           style={styles.shareImg}
-                          source={require('./pictures/alipay.png')}
+                          source={require('../pictures/alipay.png')}
                       />
                   </View>
               </View>

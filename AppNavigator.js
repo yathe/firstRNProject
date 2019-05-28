@@ -6,79 +6,72 @@
  * @flow
  */
 
-import {
-        createStackNavigator,
-        createBottomTabNavigator,
-        createAppContainer,
-        createSwitchNavigator,// 一次只显示一个页面，默认情况下不做返回处理
-        } from "react-navigation";
+import {createStackNavigator,
+    createBottomTabNavigator,
+    createSwitchNavigator,// 一次只显示一个页面，默认情况下不做返回处理
+    createAppContainer,
+} from "react-navigation";
 import React, {Component} from 'react';
 import {Image} from 'react-native';
-import FirstPage from './FirstPage';
-import LoginPage from './LoginPage';
-import SecondPage from './SecondPage';
-import ThirdPage from './ThirdPage';
-import DetailPage from './DetailPage';
-import Weather from './Weather';
-import WeatherDetail from './WeatherDetail';
-import AddCity from './AddCity';
-import SearchCity from './SearchCity';
+import FirstPage from './container/FirstPage';
+import LoginPage from './container/LoginPage';
+import SecondPage from './container/SecondPage';
+import ThirdPage from './container/ThirdPage';
+import DetailPage from './container/DetailPage';
+import Weather from './container/weather/Weather';
+import WeatherDetail from './container/weather/WeatherDetail';
+import AddCity from './container/weather/CityList';
+import SearchCity from './container/weather/SearchCity';
+import {Provider, connect} from "react-redux";
+import store from './store/CityStore';
 
 const AppBottomNavigator = createBottomTabNavigator({
     FirstPage: {
         screen: FirstPage,
         navigationOptions: {
-            // title: '首页',
             tabBarLabel: '首页',
             tabBarIcon: ({tintColor, focused}) => {
-                return (
-                    <Image
-                        source={require('./pictures/ic_sheet_tab.png')}//自定义图片
-                        style={{width:26,height:26, tintColor: tintColor}}//选中后颜色变成tintcolor
-                />)
+                return  <Image
+                    source={require('./pictures/ic_sheet_tab.png')}//自定义图片
+                    style={{width:26,height:26, tintColor: tintColor}}//选中后颜色变成tintcolor
+                />
             }
         }
     },
-    SecondPage:{
+    SecondPage: {
         screen: DetailPage,
         // screen: SecondPage,
         navigationOptions: {
-            // title: '发现',
             tabBarLabel: '发现',
             tabBarIcon: ({tintColor,focused}) => {
-                return (
-                    <Image
-                        source={require('./pictures/ic_tab_document.png')}//自定义图片
-                        style={{width: 26,height:26,tintColor:tintColor}}//选中后颜色变成tintcolor
-                  />)
+                return <Image
+                    source={require('./pictures/ic_tab_document.png')}//自定义图片
+                    style={{width: 26,height:26,tintColor:tintColor}}//选中后颜色变成tintcolor
+                />
             }
         }
     },
     ThirdPage: {
         screen: ThirdPage,
         navigationOptions: {
-          // title : '我的',
             tabBarLabel: '我的',
             tabBarIcon: ({tintColor, focused}) => {
-                return (
-                    <Image
-                        source={require('./pictures/ic_tab_me.png')}
-                        style={{width:26,height:26,tintColor:tintColor}}
-                />)
-          }
+                return <Image
+                    source={require('./pictures/ic_tab_me.png')}
+                    style={{width:26,height:26,tintColor:tintColor}}
+                />
+            }
         }
     },ForthPage: {
         screen: Weather,
         navigationOptions: {
             header: null,
-            // title : '我的',
             tabBarLabel: '天气',
             tabBarIcon: ({tintColor, focused}) => {
-                return (
-                    <Image
-                        source={require('./pictures/ic_tab_me.png')}
-                        style={{width:26,height:26,tintColor:tintColor}}
-                    />)
+                return <Image
+                    source={require('./pictures/ic_tab_me.png')}
+                    style={{width:26,height:26,tintColor:tintColor}}
+                />
             }
         }
     },
@@ -93,7 +86,6 @@ AppBottomNavigator.navigationOptions = ({navigation}) => {//可以对具体页�
     if (routeName === 'FirstPage') {
         return {
             headerTitle: '首页'
-          // header: null
         }
     } else if (routeName === 'SecondPage') {
         return {
@@ -105,7 +97,6 @@ AppBottomNavigator.navigationOptions = ({navigation}) => {//可以对具体页�
         }
     } else if (routeName === 'ForthPage') {
         return {
-            // headerTitle: '天气'
             header: null,
         }
     }
@@ -122,16 +113,8 @@ const AuthStackNavigator = createStackNavigator({
 });
 
 const AppStackNavigator = createStackNavigator({
-    Bottom:{
-        screen:AppBottomNavigator,
-          // navigationOptions:{
-            // title:'hh',
-            // header:null,
-            // headerLeft:null,//隐藏左侧返回按键
-          // }
-    },
-    Detail: {
-        screen: DetailPage,
+    Bottom: {
+        screen: AppBottomNavigator,
     },
     WeatherDetail: {
         screen: WeatherDetail,
@@ -144,13 +127,23 @@ const AppStackNavigator = createStackNavigator({
     },
 });
 
-export const APPSwitch = createSwitchNavigator({
+const APPSwitch = createSwitchNavigator({
     Auth: {
         screen: AuthStackNavigator,
     },
     APP: {
         screen: AppStackNavigator,
     },
-    initialRouteName: 'Auth'
+    initialRouteName: 'Auth',
+});
+
+let AppStackNavigatorContainer = createAppContainer(APPSwitch);
+export default class App extends React.Component {
+    render() {
+        return (
+            <Provider store={store}>
+                <AppStackNavigatorContainer/>
+            </Provider>
+        )
     }
-);
+}

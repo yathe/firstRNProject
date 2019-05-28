@@ -4,12 +4,19 @@
 
 import {AppRegistry} from 'react-native';
 import {name as appName} from './app.json';
-import {createAppContainer} from "react-navigation";
-import {APPSwitch} from "./AppNavigator";
-import LoginPage from './LoginPage';
-const AppStackNavigatorContainer=createAppContainer(APPSwitch);
 
+import App from "./AppNavigator";
 
-GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest
-AppRegistry.registerComponent(appName, () => AppStackNavigatorContainer);
-AppRegistry.registerComponent('LoginPage',()=>AppStackNavigatorContainer);//导出原生需要使用的界面
+// To see all the requests in the chrome Dev tools in the network tab.
+XMLHttpRequest = GLOBAL.originalXMLHttpRequest ? GLOBAL.originalXMLHttpRequest : GLOBAL.XMLHttpRequest;
+
+// fetch logger
+global._fetch = fetch;
+global.fetch = function (uri, options, ...args) {
+    return global._fetch(uri, options, ...args).then((response) => {
+        console.log('Fetch', { request: { uri, options, ...args }, response });
+        return response;
+    });
+};
+
+AppRegistry.registerComponent(appName, () => App);//导出原生需要使用的界面

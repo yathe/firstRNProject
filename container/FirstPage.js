@@ -25,7 +25,7 @@ export default class FirstPage extends Component<Props>{
         return(
             <TouchableOpacity style={styles.itemView}>
                 <Image
-                    source={require('./pictures/福字.png')}
+                    source={require('../pictures/福字.png')}
                     style={{width:90,height:90,alignItems:'center',marginLeft:10,marginRight:10}}
                 />
                 <View style={styles.itemDetail}>
@@ -87,31 +87,33 @@ export default class FirstPage extends Component<Props>{
                 <Swiper
                     style={styles.wrapper}
                     showsButton={true}
-                    activeDot={<View style={{//修改选中的点的样式
-                        backgroundColor: 'white',
-                        width: 8,
-                        height: 8,
-                        borderRadius: 4,
-                        marginLeft: 3,
-                        marginRight: 3,
-                        marginTop: 3,
-                        marginBottom: 3,
-                    }}/>}
+                    activeDot={
+                        <View style={{//修改选中的点的样式
+                            backgroundColor: 'white',
+                            width: 8,
+                            height: 8,
+                            borderRadius: 4,
+                            marginLeft: 3,
+                            marginRight: 3,
+                            marginTop: 3,
+                            marginBottom: 3,
+                        }}/>
+                    }
                     paginationStyle={{bottom:1}}>
                     <Image
                         style={styles.slider1}
                         resizeMode='stretch'// 图片可以铺满
-                        source={require('./pictures/ad1.jpg')}
+                        source={require('../pictures/ad1.jpg')}
                     />
                     <Image
                         style={styles.slider1}
                         resizeMode='stretch'// 图片可以铺满
-                        source={require('./pictures/ad5.jpg')}
+                        source={require('../pictures/ad5.jpg')}
                     />
                     <Image
                         style={styles.slider1}
                         resizeMode='stretch'// 图片可以铺满
-                        source={require('./pictures/ad6.jpg')}
+                        source={require('../pictures/ad6.jpg')}
                     />
                 </Swiper>
 
@@ -119,7 +121,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.typeChildView}>
                     <Image
                         style={styles.typeImg}
-                        source={require('./pictures/icon_dishware.png')}
+                        source={require('../pictures/icon_dishware.png')}
                     />
                     <Text style={styles.typeText}>
                         粮油
@@ -128,7 +130,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.typeChildView}>
                     <Image
                         style={styles.typeImg}
-                        source={require('./pictures/icon_drink.png')}
+                        source={require('../pictures/icon_drink.png')}
                     />
                     <Text style={styles.typeText}>
                         蔬菜
@@ -137,7 +139,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.typeChildView}>
                     <Image
                         style={styles.typeImg}
-                        source={require('./pictures/icon_vegetables.png')}
+                        source={require('../pictures/icon_vegetables.png')}
                     />
                     <Text style={styles.typeText}>
                         调料干货
@@ -146,7 +148,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.typeChildView}>
                     <Image
                         style={styles.typeImg}
-                        source={require('./pictures/icon_egg.png')}
+                        source={require('../pictures/icon_egg.png')}
                     />
                     <Text style={styles.typeText}>
                         肉禽蛋
@@ -155,7 +157,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.typeChildView}>
                     <Image
                         style={styles.typeImg}
-                        source={require('./pictures/icon_fish.png')}
+                        source={require('../pictures/icon_fish.png')}
                     />
                     <Text style={styles.typeText}>
                         水冻产品
@@ -164,7 +166,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.typeChildView}>
                     <Image
                         style={styles.typeImg}
-                        source={require('./pictures/icon_fruit.png')}
+                        source={require('../pictures/icon_fruit.png')}
                     />
                     <Text style={styles.typeText}>
                         餐具饮料
@@ -173,7 +175,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.typeChildView}>
                     <Image
                         style={styles.typeImg}
-                        source={require('./pictures/icon_grain-and-oil.png')}
+                        source={require('../pictures/icon_grain-and-oil.png')}
                     />
                     <Text style={styles.typeText}>
                         酒水饮料
@@ -182,7 +184,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.typeChildView}>
                     <Image
                         style={styles.typeImg}
-                        source={require('./pictures/icon_seasoning.png')}
+                        source={require('../pictures/icon_seasoning.png')}
                     />
                     <Text style={styles.typeText}>
                         水果
@@ -192,7 +194,7 @@ export default class FirstPage extends Component<Props>{
                     <View style={styles.activityView}>
                         <Image
                             style={{ width:50,height:50,marginTop:10}}
-                            source={require('./pictures/pic_banner.png')}
+                            source={require('../pictures/pic_banner.png')}
                         />
                         <View style={styles.activityDetailView}>
                             <Text style={{fontSize:18,marginLeft:10,marginTop:10}}>
@@ -204,7 +206,7 @@ export default class FirstPage extends Component<Props>{
                         </View>
                         <Image
                             style={{marginLeft:20,width:50,height:50,marginTop:10}}
-                            source={require('./pictures/pic_bann.png')}
+                            source={require('../pictures/pic_bann.png')}
                         />
                         <View style={styles.activityDetailView}>
                             <Text style={{fontSize:18,marginLeft:10,marginTop:10}}>

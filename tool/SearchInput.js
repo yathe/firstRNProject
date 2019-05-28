@@ -15,33 +15,33 @@ export default class SearchInput extends Component {
             data: [],
             // flag: null,
         };
-        // this.search = this.search.bind(this);// 生命周期以外的方法要绑定
     }
 
     search = () => {
         const { text } = this.state;
         Keyboard.dismiss();
-        // clearTimeout(this.state.flag)
-        //     this.setState({
-        //         setTimeout(() => {
-                    fetch(`https://api.douban.com/v2/movie/search?q=${text}&apikey=0b2bdeda43b5688921839c8ecb20399b&client=something`)
-                        .then(res => res.json())
-                        .then(data => {
-                            this.props.getSearchWord(data)// 传递值都是通过this.props进行，getSearchWord是父组件中定义的方法，子组件传递data给父组件
-                        });
-                // },1500)
+        if (this.props.name === 'second') {
+            // clearTimeout(this.state.flag)
+            //     this.setState({
+            //         setTimeout(() => {
+            fetch(`https://api.douban.com/v2/movie/search?q=${text}&apikey=0b2bdeda43b5688921839c8ecb20399b&client=something`)
+                .then(res => res.json())
+                .then(data => {
+                    this.props.getSearchWord(data)// 传递值都是通过this.props进行，getSearchWord是父组件中定义的方法，子组件传递data给父组件
+                });
+            // },1500)
             // });
-
+        } else if (this.props.name === 'city') {
+            this.props.receiveCityName(text);// 向父组件传递值
+        }
     }
 
     render() {
-        // const {navigate} = this.props.navigation;
-        const {data, text} = this.state;
         return (
             <View style={styles.bgView}>
                 <Image
                     style={styles.searchImg}
-                    source={require('./pictures/search.png')}
+                    source={require('../pictures/search.png')}
                 />
                 <TextInput style={styles.searchText}
                            onChangeText={(text) => this.setState({text})}
