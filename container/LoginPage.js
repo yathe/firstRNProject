@@ -31,7 +31,6 @@ export default class LoginPage extends Component<Props> {
           password: '',
           token: '',
         };
-      // this.login = this.login.bind(this);
     };
 
   login = () => {
@@ -88,30 +87,25 @@ export default class LoginPage extends Component<Props> {
     };
 
   render() {
-      const {navigation} = this.props;
       return (
           <SafeAreaView style={{flex:1,backgroundColor:'#f5fcff'}}>
               <View style={styles.container}>
-                  <Image
-                      style={styles.circleImg}
+                  <Image style={styles.circleImg}
                       source={require('../pictures/pic.png')}
                   />
                   {/*头像*/}
-                  <TextInput
-                      style={styles.textInput}
+                  <TextInput style={styles.textInput}
                       placeholder="请输入用户名"
                       onChangeText={(text) => this.setState({name: text})}
                   />
                   {/*用户名*/}
-                  <TextInput
-                      style={styles.textInput}
+                  <TextInput style={styles.textInput}
                       placeholder="请输入密码"
                       secureTextEntry={true}
                       onChangeText={(text) => this.setState({password: text})}
                   />
                   {/*密码*/}
-                  <TouchableOpacity
-                      style={styles.button}
+                  <TouchableOpacity style={styles.button}
                       onPress={()=>{
                         this.login();
                         // navigation.navigate('Bottom')
@@ -121,23 +115,15 @@ export default class LoginPage extends Component<Props> {
                   </TouchableOpacity>
                   {/*登录按键*/}
                   <View style={styles.canNot}>
-                      <Text style={{color:'#4398ff'}}>
-                          无法登录
-                      </Text>
-                      <Text style={{color:'#4398ff'}}>
-                          新用户
-                      </Text>
+                      <Text style={{color:'#4398ff'}}>无法登录</Text>
+                      <Text style={{color:'#4398ff'}}>新用户</Text>
                   </View>
                   <View style={styles.share}>
-                      <Text style={styles.shareText}>
-                          其他登录方式：
-                      </Text>
-                      <Image
-                          style={styles.shareImg}
+                      <Text style={styles.shareText}>其他登录方式：</Text>
+                      <Image style={styles.shareImg}
                           source={require('../pictures/wechat.png')}
                       />
-                      <Image
-                          style={styles.shareImg}
+                      <Image style={styles.shareImg}
                           source={require('../pictures/alipay.png')}
                       />
                   </View>

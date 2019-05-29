@@ -78,148 +78,108 @@ export default class FirstPage extends Component<Props>{
 
         return (
             <SafeAreaView style={{flex:1,backgroundColor:'#f7f7f7'}}>
-                <ScrollView
-                    horizontal={false}//垂直滚动
+                <ScrollView horizontal={false}//垂直滚动
                     removeClippedSubviews={true}
                     showsVerticalScrollIndicator={false}
                 >
-                {/*//轮播图*/}
-                <Swiper
-                    style={styles.wrapper}
-                    showsButton={true}
-                    activeDot={
-                        <View style={{//修改选中的点的样式
-                            backgroundColor: 'white',
-                            width: 8,
-                            height: 8,
-                            borderRadius: 4,
-                            marginLeft: 3,
-                            marginRight: 3,
-                            marginTop: 3,
-                            marginBottom: 3,
-                        }}/>
-                    }
-                    paginationStyle={{bottom:1}}>
-                    <Image
-                        style={styles.slider1}
-                        resizeMode='stretch'// 图片可以铺满
-                        source={require('../pictures/ad1.jpg')}
-                    />
-                    <Image
-                        style={styles.slider1}
-                        resizeMode='stretch'// 图片可以铺满
-                        source={require('../pictures/ad5.jpg')}
-                    />
-                    <Image
-                        style={styles.slider1}
-                        resizeMode='stretch'// 图片可以铺满
-                        source={require('../pictures/ad6.jpg')}
-                    />
-                </Swiper>
+                    {/*//轮播图*/}
+                    <Swiper style={styles.wrapper}
+                        showsButton={true}
+                        activeDot={
+                            <View style={{//修改选中的点的样式
+                                backgroundColor: 'white',
+                                width: 8,
+                                height: 8,
+                                borderRadius: 4,
+                                marginLeft: 3,
+                                marginRight: 3,
+                                marginTop: 3,
+                                marginBottom: 3,
+                            }}/>
+                        }
+                        paginationStyle={{bottom:1}}>
+                        <Image style={styles.slider1}
+                            resizeMode='stretch'// 图片可以铺满
+                            source={require('../pictures/ad1.jpg')}
+                        />
+                        <Image style={styles.slider1}
+                            resizeMode='stretch'// 图片可以铺满
+                            source={require('../pictures/ad5.jpg')}
+                        />
+                        <Image style={styles.slider1}
+                            resizeMode='stretch'// 图片可以铺满
+                            source={require('../pictures/ad6.jpg')}
+                        />
+                    </Swiper>
 
-                <View style={styles.typeView}>
-                    <View style={styles.typeChildView}>
-                    <Image
-                        style={styles.typeImg}
-                        source={require('../pictures/icon_dishware.png')}
-                    />
-                    <Text style={styles.typeText}>
-                        粮油
-                    </Text>
+                    <View style={styles.typeView}>
+                        <View style={styles.typeChildView}>
+                            <Image style={styles.typeImg}
+                                source={require('../pictures/icon_dishware.png')}
+                            />
+                            <Text style={styles.typeText}>粮油</Text>
+                        </View>
+                        <View style={styles.typeChildView}>
+                            <Image style={styles.typeImg}
+                                source={require('../pictures/icon_drink.png')}
+                            />
+                            <Text style={styles.typeText}>蔬菜</Text>
+                        </View>
+                        <View style={styles.typeChildView}>
+                            <Image style={styles.typeImg}
+                                source={require('../pictures/icon_vegetables.png')}
+                            />
+                            <Text style={styles.typeText}>调料干货</Text>
+                        </View>
+                        <View style={styles.typeChildView}>
+                            <Image style={styles.typeImg}
+                                source={require('../pictures/icon_egg.png')}
+                            />
+                            <Text style={styles.typeText}>肉禽蛋</Text>
+                        </View>
+                        <View style={styles.typeChildView}>
+                            <Image style={styles.typeImg}
+                                source={require('../pictures/icon_fish.png')}
+                            />
+                            <Text style={styles.typeText}>水冻产品</Text>
+                        </View>
+                        <View style={styles.typeChildView}>
+                            <Image style={styles.typeImg}
+                                source={require('../pictures/icon_fruit.png')}
+                            />
+                            <Text style={styles.typeText}>餐具饮料</Text>
+                        </View>
+                        <View style={styles.typeChildView}>
+                            <Image style={styles.typeImg}
+                                source={require('../pictures/icon_grain-and-oil.png')}
+                            />
+                            <Text style={styles.typeText}>酒水饮料</Text>
+                        </View>
+                        <View style={styles.typeChildView}>
+                            <Image style={styles.typeImg}
+                                source={require('../pictures/icon_seasoning.png')}
+                            />
+                            <Text style={styles.typeText}>水果</Text>
+                        </View>
                     </View>
-                    <View style={styles.typeChildView}>
-                    <Image
-                        style={styles.typeImg}
-                        source={require('../pictures/icon_drink.png')}
-                    />
-                    <Text style={styles.typeText}>
-                        蔬菜
-                    </Text>
-                    </View>
-                    <View style={styles.typeChildView}>
-                    <Image
-                        style={styles.typeImg}
-                        source={require('../pictures/icon_vegetables.png')}
-                    />
-                    <Text style={styles.typeText}>
-                        调料干货
-                    </Text>
-                    </View>
-                    <View style={styles.typeChildView}>
-                    <Image
-                        style={styles.typeImg}
-                        source={require('../pictures/icon_egg.png')}
-                    />
-                    <Text style={styles.typeText}>
-                        肉禽蛋
-                    </Text>
-                    </View>
-                    <View style={styles.typeChildView}>
-                    <Image
-                        style={styles.typeImg}
-                        source={require('../pictures/icon_fish.png')}
-                    />
-                    <Text style={styles.typeText}>
-                        水冻产品
-                    </Text>
-                    </View>
-                    <View style={styles.typeChildView}>
-                    <Image
-                        style={styles.typeImg}
-                        source={require('../pictures/icon_fruit.png')}
-                    />
-                    <Text style={styles.typeText}>
-                        餐具饮料
-                    </Text>
-                    </View>
-                    <View style={styles.typeChildView}>
-                    <Image
-                        style={styles.typeImg}
-                        source={require('../pictures/icon_grain-and-oil.png')}
-                    />
-                    <Text style={styles.typeText}>
-                        酒水饮料
-                    </Text>
-                    </View>
-                    <View style={styles.typeChildView}>
-                    <Image
-                        style={styles.typeImg}
-                        source={require('../pictures/icon_seasoning.png')}
-                    />
-                    <Text style={styles.typeText}>
-                        水果
-                    </Text>
-                    </View>
-                </View>
                     <View style={styles.activityView}>
-                        <Image
-                            style={{ width:50,height:50,marginTop:10}}
+                        <Image style={{ width:50,height:50,marginTop:10}}
                             source={require('../pictures/pic_banner.png')}
                         />
                         <View style={styles.activityDetailView}>
-                            <Text style={{fontSize:18,marginLeft:10,marginTop:10}}>
-                                特价活动
-                            </Text>
-                            <Text style={{fontSize:14,marginLeft:10,color:'gray',marginTop:5}}>
-                                爆款、全市最低价
-                            </Text>
+                            <Text style={{fontSize:18,marginLeft:10,marginTop:10}}>特价活动</Text>
+                            <Text style={{fontSize:14,marginLeft:10,color:'gray',marginTop:5}}>爆款、全市最低价</Text>
                         </View>
-                        <Image
-                            style={{marginLeft:20,width:50,height:50,marginTop:10}}
+                        <Image style={{marginLeft:20,width:50,height:50,marginTop:10}}
                             source={require('../pictures/pic_bann.png')}
                         />
                         <View style={styles.activityDetailView}>
-                            <Text style={{fontSize:18,marginLeft:10,marginTop:10}}>
-                                免配送费
-                            </Text>
-                            <Text style={{fontSize:14,marginLeft:10,color:'gray',marginTop:5}}>
-                                免费送菜啦
-                            </Text>
+                            <Text style={{fontSize:18,marginLeft:10,marginTop:10}}>免配送费</Text>
+                            <Text style={{fontSize:14,marginLeft:10,color:'gray',marginTop:5}}>免费送菜啦</Text>
                         </View>
                     </View>
                     <View style={{flex:1,marginTop: 20,backgroundColor:'white'}}>
-                        <FlatList
-                            ref = {(flatList)=>this._flatList = flatList}
+                        <FlatList ref = {(flatList)=>this._flatList = flatList}
                             ItemSeparatorComponent={this.seperator}// 分割线
                             renderItem={this.renderItem}// 解析数据
                             data={data}//数据源
@@ -227,7 +187,7 @@ export default class FirstPage extends Component<Props>{
                         >
                         </FlatList>
                     </View>
-            </ScrollView>
+                </ScrollView>
             </SafeAreaView>
         )
     }

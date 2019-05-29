@@ -48,8 +48,7 @@ class CityList extends Component<Props> {
             }
         ];
         return (
-            <Swipeout
-                style={{backgroundColor: 'black'}}
+            <Swipeout style={{backgroundColor: 'black'}}
                 close={!(this.state.sectionID === item.sectionID && this.state.rowID === item.rowID)}
                 right={btns}
                 rowID={item.rowID}
@@ -88,16 +87,13 @@ class CityList extends Component<Props> {
                             <Text style={{fontSize: 17, color: 'white'}}> X </Text>
                         </TouchableOpacity>
                     </View>
-                    <FlatList
-                        data={city}
+                    <FlatList data={city}
                         renderItem={this.renderItems}
                         keyExtractor={(item, index)=>index.toString()}
                     />
 
                     <View style={styles.addCity}>
-                        <TouchableOpacity onPress={() => {
-                            navigation.navigate('SearchCity')
-                        }}>
+                        <TouchableOpacity onPress={() => {navigation.navigate('SearchCity')}}>
                             <Text style={styles.font}>+ 添加城市</Text>
                         </TouchableOpacity>
                     </View>
@@ -149,9 +145,9 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
     },
 })
+
 // redux connect
 // 两个参数 第一个传值（数字、字符串、数组、对象），第二个传方法（函数）
-
 const mapStateToProps = state => ({city: state.city})
 
 const mapDispatchToProps = dispatch => ({

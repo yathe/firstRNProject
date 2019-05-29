@@ -9,9 +9,8 @@ import {
     FlatList,
     TouchableOpacity,
     Text,
-    Linking,
 } from 'react-native';
-import ScrollableTabView, {DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import SearchInput from '../tool/SearchInput';// 导入搜索栏
 
 export default class SecondPage extends Component<Props>{
@@ -67,7 +66,7 @@ export default class SecondPage extends Component<Props>{
                 });
             }).catch((error) => {
                 console.error(error);
-        });
+            });
         return arrList;//之前把return写在then里面，没有返回数据
     }
 
@@ -108,32 +107,23 @@ export default class SecondPage extends Component<Props>{
     renderItem(item) {//渲染数据
         return (
             <TouchableOpacity style={styles.itemView}
-                              onPress={() => {// 调用系统浏览器
-                                  // alert('1323');//弹窗
-                                  // var url = 'http://baidu.com';
-                                  // Linking.openURL(url)
-                                  //     .catch((err) => {
-                                  //         console.log('error occurred')
-                                  //     });
-                                  navigate('Detail', {
-                                      id: item.item.value.id
-                                  })
-                              }}>
-                <Image
-                    style={styles.itemImg}
+                onPress={() => {
+                    navigate('Detail', {
+                        id: item.item.value.id
+                    })
+                }}
+            >
+                <Image style={styles.itemImg}
                     source={{uri:item.item.value.images.large.replace('webp', 'png')}}
                 />
                 <View style={styles.itemTextView}>
-                    <Text style={styles.itemText}>
-                        {item.item.value.title}
-                    </Text>
+                    <Text style={styles.itemText}>{item.item.value.title}</Text>
                     <Text style={styles.itemDetail}>
                         导演：{item.item.value.directors[0].name}
                     </Text>
                     <Text style={styles.itemDetail2}>
                         主演：{item.item.value.casts.map((v) => v.name).join('/')}
                     </Text>
-
                 </View>
             </TouchableOpacity>
         )
@@ -149,15 +139,12 @@ export default class SecondPage extends Component<Props>{
     renderLoadingView() {
         return (
             <View style={styles.container}>
-                <Text>
-                    loading messages..
-                </Text>
+                <Text>loading messages..</Text>
             </View>
         )
     }
 
     render() {
-        const {navigate} = this.props.navigation;
         const {movies, comings} = this.state;
         if (!this.state.loaded) {
             return this.renderLoadingView;
@@ -166,8 +153,7 @@ export default class SecondPage extends Component<Props>{
         return (
             <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
                 <View style={styles.container}>
-                    <SearchInput
-                        name='second'
+                    <SearchInput name='second'
                         navigation={this.props.navigation}// 通过this.props把属性传给子组件
                         getSearchWord={this.getSearchWord}
                     />
@@ -194,8 +180,7 @@ export default class SecondPage extends Component<Props>{
                         <View tabLabel='正在热映'
                             style={{flex:1,marginTop:5}}>
                             {/*//加了flex之后会考虑底部安全距离*/}
-                            <FlatList
-                                ItemSeparatorComponent={this.separator}
+                            <FlatList ItemSeparatorComponent={this.separator}
                                 data = {movies}
                                 renderItem={this.renderItem}
                                 handleMethod = {({viewableItems}) => this.handleViewableItemsChanged(viewableItems)}
@@ -207,8 +192,7 @@ export default class SecondPage extends Component<Props>{
                         <View tabLabel='即将上映'
                             style={{flex:1,marginTop:5}}>
                             {/*//加了flex之后会考虑底部安全距离*/}
-                            <FlatList
-                                ItemSeparatorComponent={this.separator}
+                            <FlatList ItemSeparatorComponent={this.separator}
                                 data = {comings}
                                 renderItem={this.renderItem}
                                 handleMethod = {({viewableItems}) => this.handleViewableItemsChanged(viewableItems)}

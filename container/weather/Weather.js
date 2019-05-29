@@ -137,13 +137,7 @@ class Weather extends Component<Props>{
 
     // 选中另一个城市
     changeCity = (title) => {
-        // this.setState({
-        //     data:this.props.city,
-        // });
-        // alert(title);
         this.fetchData(title);
-        // hhhhhhhh 林思辰 欠我一顿饭，在此证明。立字为据。
-        // jide a kewude linsichen
     }
 
 
@@ -194,7 +188,7 @@ class Weather extends Component<Props>{
                                                 changeCity: this.changeCity
                                             })
                                         }}>
-                                            <Text style={styles.fontSmall}>+ {item.title}市</Text>
+                                            <Text style={styles.fontSmall}>+ {item.title}</Text>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={styles.temperature}>
@@ -362,6 +356,6 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-let cityContainer = connect(mapStateToProps, mapDispatchToProps)(Weather);
+let cityContainer = connect(mapStateToProps, mapDispatchToProps)(Weather)
 
 export default cityContainer

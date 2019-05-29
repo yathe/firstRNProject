@@ -9,9 +9,10 @@ import {
 } from "react-native";
 import SearchInput from '../../tool/SearchInput';
 import Grid from 'react-native-grid-component';
-import {addCity, deleteCity} from "../../actions/CityAction";
+import {updateCities} from "../../actions/CityAction";
 import {updateLocation, updateToSelected, updateToUnSelected} from "../../actions/LocationAction";
 import {connect} from 'react-redux';
+import {cities as cities} from '../../cityArr.json';
 
 const dimensions = require('Dimensions');//屏幕信息
 const {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽和高
@@ -21,7 +22,7 @@ class SearchCity extends Component<Props> {
         super(props);
         this.props.location.map((item) => {
             if (item.title != '定位') {
-                const step = this.props.city.findIndex(it => it.title === item.title.substring(0, item.title.length - 1));
+                const step = this.props.city.findIndex(it => it.title === item.title);
                 if (step > -1) {
                     this.props.updateToSelectedByTitle(item.title)
                 } else {
@@ -29,10 +30,17 @@ class SearchCity extends Component<Props> {
                 }
             }
         });
+        let arr = [];
+        cities.map((it) => {
+            const step = this.props.city.findIndex(item => item.title === it);
+            if (step > -1) {
+                arr.push({title: it, temperature: this.props.city[step].temperature, chosen: true});
+            }
+        });
 
         this.state = {
+            originData: arr,
             activeList: [],
-            deleteList: [],
             isSearch: false,
         };
     }
@@ -43,9 +51,9 @@ class SearchCity extends Component<Props> {
 
     onPressHandler = (itemId) => {
         const array = [];
-        const deleteArr = [];
-        this.props.location.map((it, index) => {
-            if(it.id === itemId) {
+
+        this.props.location.map((it) => {
+            if(it.title === itemId) {
                 if (it.chosen) {
                     this.props.updateToUnSelectedByTitle(it.title)
                 } else {
@@ -53,65 +61,88 @@ class SearchCity extends Component<Props> {
                 }
                 it.chosen = !it.chosen
             }
-            const step = this.props.city.findIndex(item => item.title === it.title.substring(0, it.title.length - 1));
-            // 新增的城市
-            if (it.chosen && step < 0) {
-                array.push(it.title.substring(0, it.title.length - 1));
-            }
-            // 取消选择的城市
-            if (!it.chosen && step > -1) {
-                deleteArr.push(it.title.substring(0, it.title.length - 1))
+
+            const step = this.props.city.findIndex(item => item.title === it.title);
+
+            if (it.chosen) {
+                if (step > -1) {
+                    array.push({title: it.title, temperature:this.props.city[step].temperature})
+
+                } else {
+                    array.push({title: it.title, temperature:'-'});
+                }
             }
         });
+
+        if (this.state.data) {
+            this.state.data.map((it) => {
+                if (it.title === itemId) {
+                    if (it.chosen) {
+                        this.props.updateToUnSelectedByTitle(it.title)
+                    } else {
+                        this.props.updateToSelectedByTitle(it.title)
+                    }
+                    it.chosen = !it.chosen
+                }
+                const index = array.findIndex(item => item.title == it.title);
+
+                const step = this.props.city.findIndex(item => item.title === it.title);
+
+                if (it.chosen && index < 0) {
+                    if (step > -1) {
+                        array.push({title: it.title, temperature: this.props.city[step].temperature});
+                    } else {
+                        array.push({title: it.title, temperature: '-'});
+                    }
+                }
+            });
+        }
+
         this.setState({
-            activeList: array,
-            deleteList: deleteArr,
+            activeList: this.state.originData.concat(array)
         });
+    }
+
+    componentDidMount() {
+        this.fetchData();
     }
 
     fetchData = () => {
-        // const url = 'https://api.map.baidu.com/location/ip?ak=S0c7jh3fCDKDDdaIALdMOjfHUFqeePzl'; //HTTPS协议
-        // fetch(url)
-        //     .then(response => response.json())
-        //     .then((responseData) => {
-        //         this.props.updateLocationByTitle(responseData.content.address_detail.city);
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     });
-        this.props.updateLocationByTitle('武汉市');
+        const url = 'https://api.map.baidu.com/location/ip?ak=S0c7jh3fCDKDDdaIALdMOjfHUFqeePzl'; //HTTPS协议
+        fetch(url)
+            .then(response => response.json())
+            .then((responseData) => {
+                this.props.updateLocationByTitle(responseData.content.address_detail.city.substring(0,responseData.content.address_detail.city.length - 1));
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     renderItem = (item) => {
-        if (item.isOne) {
-        // if (item.id == '0') {
+        if (!this.state.isSearch && item.id === 0) {
             return (
-                //<TouchableOpacity key={item.id} onPress={() => {
-                //    item.isOne ? this.fetchData() : this.onPressHandler(item.id);
-                //}}>
                 <TouchableOpacity key={item.id} onPress={() => {
-                    this.fetchData()
+                   item.isOne ? this.fetchData() : this.onPressHandler(item.title);
                 }}>
                     <View style={styles.itemView}>
-                        <Image
-                            source={require('../../pictures/location.jpg')}
+                        <Image source={require('../../pictures/location.jpg')}
                             style={{width: 10, height: 18, marginRight: 2}}
                             resizeMode='stretch'// 图片可以铺满
                         />
-                        <Text style={{
-                            marginTop: 10,
+                        <Text style={{ marginTop: 10,
                             marginBottom: 10,
                             alignSelf: 'center',
                             textAlign: 'center',
-                            color: 'gray'
+                            color: item.chosen ? 'green' : 'gray'
                         }}>{item.title}</Text>
                     </View>
                 </TouchableOpacity>
             )
         } else {
             return (
-                <TouchableOpacity key={item.id} onPress={() => {
-                    this.onPressHandler(item.id)
+                <TouchableOpacity key={item.id}  onPress={() => {
+                    this.onPressHandler(item.title)
                 }}>
                     <View style={styles.itemView}>
                         <Text style={{
@@ -129,6 +160,9 @@ class SearchCity extends Component<Props> {
 
     // 定义接受子组件值的方法
     receiveCityName = (text) => {
+        const details = cities.map(x => {
+            return  {title: x, chosen: false}
+        });
         if (text === '') {
             this.setState({
                 isSearch: false,
@@ -137,14 +171,27 @@ class SearchCity extends Component<Props> {
             const array = [];
             this.props.location.forEach((it) => {
                 if (it.title.indexOf(text) >= 0) {//模糊搜索
-                    array.push(it)
+                    array.push(it);
                 }
             });
+
+            details.forEach((it) => {
+                if (it.title.indexOf(text) >= 0) {//模糊搜索
+                    array.push(it);
+                }
+            });
+
+
+            if (array.length <= 0) {
+                alert('搜不到当前城市');
+            }
+
             this.setState({
                 data: array,
                 isSearch: true,
             })
         }
+
     }
 
     render() {
@@ -159,19 +206,8 @@ class SearchCity extends Component<Props> {
                             <Text style={{color: 'black', fontSize: 20}}>X</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
-
-                            // 新增
-                            this.state.activeList.map((it) => {
-                                this.props.addCityByTitle(it)
-                            });
-
-                            // 取消选择
-                            this.state.deleteList.map((it) => {
-                                this.props.deleteCityByTitle(it)
-
-                            });
-
-                            navigation.navigate("AddCity");
+                            this.props.updateCityList(this.state.activeList);
+                            navigation.goBack();
                         }}>
                             <Text style={{color: 'black', fontSize: 20}}>确认添加</Text>
                         </TouchableOpacity>
@@ -183,8 +219,7 @@ class SearchCity extends Component<Props> {
                     <View style={styles.addView}>
                             <Text style={{marginTop: 20, marginLeft: 10, fontSize: 20}}>热门城市</Text>
                         <View style={{flex: 1, marginTop: 20, flexDirection: 'column', justifyContent: 'center'}}>
-                            <Grid
-                                renderItem={this.renderItem}
+                            <Grid renderItem={this.renderItem}
                                 data={this.state.isSearch ? this.state.data : this.props.location}
                                 keyExtractor={(item, index)=>index.toString()}
                                 numColumns={3}
@@ -229,12 +264,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({city: state.city, location: state.location})
 const mapDispatchToProps = dispatch => ({
-    addCityByTitle: (title) => {
-        dispatch(addCity(title, '-'))
-    },
-    deleteCityByTitle: (title) => {
-        dispatch(deleteCity(title))
-    },
+
     updateLocationByTitle: (title) => {
         dispatch(updateLocation(title))
     },
@@ -244,6 +274,9 @@ const mapDispatchToProps = dispatch => ({
     updateToUnSelectedByTitle: (title) => {
         dispatch(updateToUnSelected(title))
     },
+    updateCityList: arr => {
+        dispatch(updateCities(arr))
+    }
 })
 
 let cityContainer = connect(mapStateToProps, mapDispatchToProps)(SearchCity);

@@ -2,26 +2,26 @@
 import * as types from '../actions/ActionType';
 const initialState = [
     {isOne:true, title: '定位'},
-    {title: '北京市'},
-    {title: '上海市'},
-    {title: '苏州市'},
-    {title: '郑州市'},
-    {title: '西安市'},
-    {title: '南京市'},
-    {title: '昆明市'},
-    {title: '赤峰市'},
-    {title: '随州市'},
-    {title: '邵阳市'},
-    {title: '临沂市'},
-    {title: '拉萨市'},
-    {title: '呼和浩特市'},
-    {title: '成都市'},
-    {title: '深圳市'},
-    {title: '广州市'},
-    {title: '厦门市'},
-    {title: '福州市'},
-    {title: '天津市'},
-    {title: '丽江市'}
+    {title: '北京'},
+    {title: '上海'},
+    {title: '苏州'},
+    {title: '郑州'},
+    {title: '西安'},
+    {title: '南京'},
+    {title: '昆明'},
+    {title: '赤峰'},
+    {title: '随州'},
+    {title: '邵阳'},
+    {title: '临沂'},
+    {title: '拉萨'},
+    {title: '呼和浩特'},
+    {title: '成都'},
+    {title: '深圳'},
+    {title: '广州'},
+    {title: '厦门'},
+    {title: '福州'},
+    {title: '天津'},
+    {title: '丽江'},
 ].map((item, index) => {
     item.id = index;// id是唯一标识符
     item.chosen = false;
@@ -33,11 +33,9 @@ export default function location(state = initialState, action) {
     switch (action.type) {
         case types.UPDATELOCATION:
             return [
-                {
+                {   ...state[0],
                     title: action.title,
                     isOne: false,
-                    id: 0,
-                    chosen: false,
                 },
                 ...state.slice(1)
             ];
@@ -46,8 +44,7 @@ export default function location(state = initialState, action) {
                 return [
                     ...state.slice(0, index),
                     {
-                        title: action.title,
-                        id: index,
+                        ...state[index],
                         chosen: true
                     },
                     ...state.slice(index + 1)
@@ -59,8 +56,7 @@ export default function location(state = initialState, action) {
                 return [
                     ...state.slice(0, index),
                     {
-                        title: action.title,
-                        id: index,
+                        ...state[index],
                         chosen: false,
                     },
                     ...state.slice(index + 1)

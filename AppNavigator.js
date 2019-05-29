@@ -6,7 +6,8 @@
  * @flow
  */
 
-import {createStackNavigator,
+import {
+    createStackNavigator,
     createBottomTabNavigator,
     createSwitchNavigator,// 一次只显示一个页面，默认情况下不做返回处理
     createAppContainer,

@@ -32,13 +32,10 @@ export default class ThirdPage extends Component<Props>{
     renderItem1 = (item) => {//渲染数据，第一个section
         return (
             <TouchableOpacity style={styles.imgView}>
-                <Image
-                    style={{marginLeft: 15, width: 90, height: 90}}
+                <Image style={{marginLeft: 15, width: 90, height: 90}}
                     source={require('../pictures/pic.png')}
                 />
-                <Text style={{marginLeft: 15,fontSize: 18}}>
-                    {item.item.title}
-                </Text>
+                <Text style={{marginLeft: 15,fontSize: 18}}>{item.item.title}</Text>
             </TouchableOpacity>
         )
     };
@@ -46,16 +43,13 @@ export default class ThirdPage extends Component<Props>{
     renderItem2 = (item) => {//渲染数据，第三个section
         return (
             <TouchableOpacity style={styles.itemV}
-                              onPress={()=>{
-                                  nativeModule.doSomething();// 调用原生界面
-                              }}
-
-                              // onPress={()=>this.props.navigation.navigate('LoginPage')}
-                                // 退出登录，navigate回到起始登录页面
+                onPress={() => {
+                    nativeModule.doSomething();// 调用原生界面
+                }}
+                // onPress={()=>this.props.navigation.navigate('LoginPage')}
+                // 退出登录，navigate回到起始登录页面
             >
-                <Text style={{fontSize: 20}}>
-                    {item.item.title}
-                </Text>
+                <Text style={{fontSize: 20}}>{item.item.title}</Text>
             </TouchableOpacity>
 
         )
@@ -70,31 +64,35 @@ export default class ThirdPage extends Component<Props>{
 
     separator = () => {//分隔线
         return (
-            <View style={{height:0.2,backgroundColor:'gray'}}>
-            </View>
+            <View style={{height:0.2,backgroundColor:'gray'}}/>
         )
     };
 
     render() {
         var sections = [// 数据源，因为不同的section有不同的样式，所以在每个数组里分别为renderItem进行赋值
-            {key:'0',
+            {
+                key:'0',
                 data:[{img:'./pic.png', title:'AD'}],
                 renderItem:this.renderItem1
-            },{key:'1',
+            },
+            {
+                key:'1',
                 data:[{title:'我的收藏'},{title:'我的订单'},{title:'个人设置'},{title:'关于'}],
                 renderItem:this.renderItem
-            },{key:'2',
+            },
+            {
+                key:'2',
                 data:[{title:'退出登录'}],
                 renderItem:this.renderItem2
-            }];
-        return(
+            }
+        ];
+        return (
             <SafeAreaView style={{flex:1,backgroundColor:'#f7f7f7'}}>
                 <View style={styles.container}>
-                    <SectionList
-                    renderSectionHeader={this.sectionItem}// 每个section的头
-                    sections = {sections}
-                    ItemSeparatorComponent={this.separator}// 分割线
-                    keyExtractor={(item,index)=>index.toString()}
+                    <SectionList renderSectionHeader={this.sectionItem}// 每个section的头
+                        sections = {sections}
+                        ItemSeparatorComponent={this.separator}// 分割线
+                        keyExtractor={(item,index)=>index.toString()}
                     >
                     </SectionList>
                 </View>

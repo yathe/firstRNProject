@@ -24,3 +24,11 @@ export function updateCity(title, temperature) {
         temperature,
     }
 }
+
+export function updateCities(arr) {
+    return {
+        type: types.UPDATECITIES,
+        cities: arr
+    }
+
+}

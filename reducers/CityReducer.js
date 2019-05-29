@@ -27,6 +27,8 @@ export default function city(state = initialState, action) {
             return state.map((item) => (item.title === action.title) ?
                 {...item, temperature: action.temperature} : item
             );
+        case types.UPDATECITIES:
+            return action.cities;
         default:
             return state;
     }
