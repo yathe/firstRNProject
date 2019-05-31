@@ -127,7 +127,7 @@ export default class DetailPage extends Component{
                 <View style={{marginLeft: 10, marginRight: 10}}>
                     <Text style={{fontSize: 16, color: 'gray',alignSelf: 'flex-start'}}>简介</Text>
                     <Text style={{fontSize: 16, marginTop: 10}}
-                          numberOfLines={this.state.num} >{summary}
+                        numberOfLines={this.state.num}>{summary}
                     </Text>
                     <TouchableOpacity onPress={() => {
                         this.setState({isExpend: !this.state.isExpend, num: this.state.isExpend ? 4 : 0})
@@ -144,7 +144,6 @@ export default class DetailPage extends Component{
                         {
                             casts.map((x, i) => {
                                 return(
-                                    //key呢
                                     <View style={styles.peopleView} key={i}>
                                         <Image style={styles.pepleImg} source={{uri:x.avatars.large}}/>
                                         <Text style={{marginTop: 10}} numberOfLines={1}>{x.name}</Text>
@@ -170,7 +169,6 @@ export default class DetailPage extends Component{
                     tabBarInactiveTextColor='#959595'
                     tabBarTextStyle={{fontSize: 15,textAlignVertical: 'center'}}
                     locked={false}
-                    onChangeTab={(i) => this.changeData(i)}
                 >
                     <View tabLabel='短评'>
                     {popular_comments.map((v,i)=>{
@@ -201,7 +199,6 @@ export default class DetailPage extends Component{
                     <View tabLabel='讨论区'>
                         {popular_comments.map((v,i) => {
                             return (
-                                //<View>的缩进不难看吗
                                 <View style={{marginTop:18,flexDirection:'row',paddingRight:20}}
                                     key={i}
                                 >
@@ -214,9 +211,7 @@ export default class DetailPage extends Component{
                                             <Text style={{lineHeight:25}}>{v.author.name}</Text>
                                         </View>
                                         <Text style={{marginBottom:8,color:'#3B3B3B'}}>{v.content}</Text>
-                                        <Text style={{marginTop:10, color:'#9b9b9b'}}>
-                                            4天前
-                                        </Text>
+                                        <Text style={{marginTop:10, color:'#9b9b9b'}}>4天前</Text>
                                     </View>
                                     <View style={{position:'absolute',right:20,top:0}}>
                                         <Text style={{color:'#9B9B9B'}}>👍{v.useful_count}</Text>

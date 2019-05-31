@@ -12,7 +12,7 @@ import Grid from 'react-native-grid-component';
 import {updateCities} from "../../actions/CityAction";
 import {updateLocation, updateToSelected, updateToUnSelected} from "../../actions/LocationAction";
 import {connect} from 'react-redux';
-import {cities as cities} from '../../cityArr.json';
+import {cities as cities} from '../../cityArr.json';// 两个点表示上一级目录
 
 const dimensions = require('Dimensions');//屏幕信息
 const {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽和高
@@ -86,7 +86,7 @@ class SearchCity extends Component<Props> {
                 }
                 const index = array.findIndex(item => item.title == it.title);
 
-                const step = this.props.city.findIndex(item => item.title === it.title);
+                const step = this.props.city.findIndex(item => item.title == it.title);
 
                 if (it.chosen && index < 0) {
                     if (step > -1) {

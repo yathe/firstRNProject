@@ -156,6 +156,6 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-let cityContainer = connect(mapStateToProps, mapDispatchToProps)(CityList);
+let cityContainer = connect(mapStateToProps, mapDispatchToProps)(CityList)
 
 export default cityContainer

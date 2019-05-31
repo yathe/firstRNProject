@@ -24,7 +24,7 @@ import WeatherDetail from './container/weather/WeatherDetail';
 import AddCity from './container/weather/CityList';
 import SearchCity from './container/weather/SearchCity';
 import {Provider, connect} from "react-redux";
-import store from './store/CityStore';
+import store from './store/Store';
 
 const AppBottomNavigator = createBottomTabNavigator({
     FirstPage: {

@@ -17,10 +17,8 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-URL = 'http://192.168.88.18:8088/api/v1/auth_tokens';
-// URL = 'https://srdb.csdc.info/api/v1/auth_tokens';
-var dimensions = require('Dimensions');//屏幕信息
-var {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽和高
+const dimensions = require('Dimensions');//屏幕信息
+const {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽和高
 
 
 export default class LoginPage extends Component<Props> {
@@ -34,57 +32,10 @@ export default class LoginPage extends Component<Props> {
     };
 
   login = () => {
-
-      // var data = {identify: this.state.name, password: this.state.password};
-      // let formData = new FormData();
-      // formData.append('identity',this.state.name);
-      // formData.append('password',this.state.password);
-      // formData.append('remember','false');
-
-      // fetch(URL,{
-      //     method: 'POST',
-      //     mode: 'cors',
-      //     headers: {
-      //       'Accept': 'application/json',
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       // 'Content-Type': 'application/json'
-      //       // 'Access-Control-Allow-Origin':'*'
-      //     },
-      //     // body: formData
-      //     body: 'identity='+this.state.name+'&password='+this.state.password+'&remember=false'
-      // })
-      // .then((response) => {
-      //     return response.json()
-      // })
-      // .then((responseData) => {
-      //     alert(responseData);
-      //     if (responseData.code ==='400') {
-      //         alert('400');
-      //     } else if (responseData.code ==='200') {
-      //         this.setState({
-      //             token: responseData
-      //         });
-      //         // this.props.navigation.navigate('Bottom',{
-      //         //   token: this.state.token
-      //         // })
-      //     }
-          this.props.navigation.navigate('Bottom',{
-              token: this.state.token
-          })
-    //   })
-    //   .catch((error) => {
-    //       console.error(error);
-    //   });
-    //
-    //   // let request = new XMLHttpRequest();
-    //   // request.onreadystatechange = e => {
-    //   //   if(request.readyState == 4) {
-    //   //     console.log(e);
-    //   //   }
-    //   // }
-    //   // request.open('POST', URL)
-    //   // request.send('identity='+this.state.name+'&password='+this.state.password+'&remember=false')
-    };
+      this.props.navigation.navigate('Bottom',{
+          token: this.state.token
+      })
+  };
 
   render() {
       return (
@@ -135,78 +86,78 @@ export default class LoginPage extends Component<Props> {
 
 //声明样式
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        flexDirection:'column',// 主轴方向是垂直的
-        backgroundColor:'#f5fcff',
-        // alignItems:'center',
+    container: {
+        flex: 1,
+        flexDirection: 'column',// 主轴方向是垂直的
+        backgroundColor: '#f5fcff',
+        // alignItems: 'center',
     },
-    circleImg:{
-        // justifyContent:'center',
-        alignSelf:'center',
-        width:100,
-        height:100,
-        borderColor:'white',
-        borderWidth:1,
-        borderRadius:50,
+    circleImg: {
+        // justifyContent: 'center',
+        alignSelf: 'center',
+        width: 100,
+        height: 100,
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 50,
         marginTop: 80,
-        marginBottom:35
+        marginBottom: 35
     },
-    textInput:{
-        marginTop:10,
+    textInput: {
+        marginTop: 10,
         height: 40,
-        marginLeft:0,
-        marginRight:0,
+        marginLeft: 0,
+        marginRight: 0,
         textAlign: 'center',
         backgroundColor: 'white',
         borderColor: 'gray',
-        fontSize:16
+        fontSize: 16
     },
-    button:{
-        borderRadius:5,
-        marginTop:15,
-        height:40,
-        marginLeft:10,
-        marginRight:10,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'#4398ff',//按键的背景色
+    button: {
+        borderRadius: 5,
+        marginTop: 15,
+        height: 40,
+        marginLeft: 10,
+        marginRight: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#4398ff',//按键的背景色
     },
-    loginText:{
-        fontSize:18,
+    loginText: {
+        fontSize: 18,
         textAlign: 'center',
-        color:'white',
+        color: 'white',
         textAlignVertical: 'center'//垂直居中
     },
-    canNot:{
-        marginLeft:10,
-        marginRight:10,
-        marginTop:10,
+    canNot: {
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 10,
         textAlign:'center',
         color:'#4398ff',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'//主轴两端对齐
     },
-    share:{
-        alignItems:'center',//内部控件垂直方向居中
-        position:'absolute',//绝对定位
-        left:0,
-        bottom:20,
-        justifyContent:'flex-start',
-        height:60,
-        flexDirection:'row'//内部控件水平排列
+    share: {
+        alignItems: 'center',//内部控件垂直方向居中
+        position: 'absolute',//绝对定位
+        left: 0,
+        bottom: 20,
+        justifyContent: 'flex-start',
+        height: 60,
+        flexDirection: 'row'//内部控件水平排列
     },
-    shareText:{
-        fontSize:15,
-        color:'gray',
-        marginLeft:10,
+    shareText: {
+        fontSize: 15,
+        color: 'gray',
+        marginLeft: 10,
     },
-    shareImg:{
+    shareImg: {
         width: 50,
-        height:50,
-        borderRadius:25,
-        marginLeft:10
+        height: 50,
+        borderRadius: 25,
+        marginLeft: 10
     },
 });
 

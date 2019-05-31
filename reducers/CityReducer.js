@@ -1,22 +1,16 @@
 
 import * as types from '../actions/ActionType';
 
-const initialState = [{
-    title: '北京',
-    temperature: '-',
-}];
+const initialState = [
+    {
+        title: '北京',
+        temperature: '-',
+    },
+];
 
 // store把 两个参数传给reducer，当前state和action
 export default function city(state = initialState, action) {
     switch (action.type) {
-        case types.ADDCITY:
-            return [
-                ...state,
-                {
-                    title: action.title,
-                    temperature: action.temperature,
-                }
-            ];
         case types.DELETECITY:
             const index = state.findIndex(item => item.title == action.title);
             if(index > -1) {

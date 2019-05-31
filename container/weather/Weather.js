@@ -15,13 +15,8 @@ import WeatherDetail from './WeatherDetail';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {updateCity} from "../../actions/CityAction";
 import {connect} from 'react-redux';
+import imgStore from '../../tool/ImgStore';
 
-const imgStore = {
-    'yin': require('../../pictures/yin.png'),
-    'qing': require('../../pictures/qing.png'),
-    'yun': require('../../pictures/yun.png'),
-    'yu': require('../../pictures/yu.png')
-};
 let dimensions = require('Dimensions');//屏幕信息
 let {screenWidth, screenHeight} = dimensions.get('window');//获取屏幕的宽和高
 
@@ -93,7 +88,6 @@ class Weather extends Component<Props>{
             })
             .catch((error) => {
                 console.error(error);
-                alert(error);
             });
     }
 
@@ -173,8 +167,7 @@ class Weather extends Component<Props>{
                                 <ScrollView style={styles.container}
                                     showsVerticalScrollIndicator={false}
                                     refreshControl={
-                                        <RefreshControl
-                                            refreshing={this.state.isRefreshing}
+                                        <RefreshControl refreshing={this.state.isRefreshing}
                                             onRefresh={this.refreshData}
                                         />
                                     }
@@ -184,7 +177,6 @@ class Weather extends Component<Props>{
                                     <View style={{marginLeft: 15, marginTop: 15}}>
                                         <TouchableOpacity onPress={() => {
                                             navigation.navigate('AddCity',{
-                                                // dataArr: this.state.data,
                                                 changeCity: this.changeCity
                                             })
                                         }}>
@@ -211,7 +203,7 @@ class Weather extends Component<Props>{
                                     </View>
                                     <Image style={{marginLeft: 30, width:210, height: 180, marginTop: 30}}
                                         resizeMode='contain'
-                                        source={imgStore[this.state.img]}/>
+                                        source={imgStore[this.state.img] || imgStore['yun']}/>
                                     <View style={{padding: 15, marginTop: 15}}>
                                         <Text style={{color: 'lightgray', fontSize: 18}}>
                                             {this.state.airTips}
@@ -238,7 +230,8 @@ class Weather extends Component<Props>{
                                         </View>
                                         <View style={{flex: 1, flexDirection: 'column'}}>
                                             <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>{forecastArr && forecastArr[1].hours[0].wea}</Text>
-                                            <View style={{backgroundColor: '#ffffff',
+                                            <View style={{
+                                                backgroundColor: '#ffffff',
                                                 marginTop: 13,
                                                 cornerRadius: 8,
                                                 paddingTop: 2,
@@ -260,12 +253,13 @@ class Weather extends Component<Props>{
                                         }}
                                     >
                                         <View style={{flex: 2, flexDirection: 'column',marginLeft: 10,}}>
-                                            <Text style={{ fontSize: 18, color: 'white'}}>{forecastArr && forecastArr[1].hours[1].day}</Text>
+                                            <Text style={{fontSize: 18, color: 'white'}}>{forecastArr && forecastArr[1].hours[1].day}</Text>
                                             <Text style={{marginTop: 10, fontSize: 18, color: 'white'}}>{forecastArr && forecastArr[1].hours[1].tem}</Text>
                                         </View>
                                         <View style={{flex: 1, flexDirection: 'column'}}>
                                             <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>{forecastArr && forecastArr[1].hours[1].wea}</Text>
-                                            <View style={{backgroundColor: '#ffffff',
+                                            <View style={{
+                                                backgroundColor: '#ffffff',
                                                 marginTop: 13,
                                                 cornerRadius: 8,
                                                 paddingTop: 2,

@@ -12,7 +12,7 @@ import {
     NativeModules
 } from 'react-native';
 
-var nativeModule = NativeModules.RNMethodTool;// 原生模块
+let nativeModule = NativeModules.RNMethodTool;// 原生模块
 
 export default class ThirdPage extends Component<Props>{
     static navigationOptions = {
@@ -22,9 +22,7 @@ export default class ThirdPage extends Component<Props>{
     renderItem = (item) => {//渲染数据，第二个section
       return (
           <TouchableOpacity style={styles.itemView}>
-              <Text style={{marginLeft: 15,fontSize: 16}}>
-                  {item.item.title}
-              </Text>
+              <Text style={{marginLeft: 15,fontSize: 16}}>{item.item.title}</Text>
           </TouchableOpacity>
       )
     };
@@ -57,8 +55,7 @@ export default class ThirdPage extends Component<Props>{
 
     sectionItem = (item) => {
         return (
-            <View style={{height:30,backgroundColor:'#f7f7f7'}}>
-            </View>
+            <View style={{height:30,backgroundColor:'#f7f7f7'}}/>
         )
     };
 
@@ -69,7 +66,7 @@ export default class ThirdPage extends Component<Props>{
     };
 
     render() {
-        var sections = [// 数据源，因为不同的section有不同的样式，所以在每个数组里分别为renderItem进行赋值
+        let sections = [// 数据源，因为不同的section有不同的样式，所以在每个数组里分别为renderItem进行赋值
             {
                 key:'0',
                 data:[{img:'./pic.png', title:'AD'}],
@@ -90,11 +87,10 @@ export default class ThirdPage extends Component<Props>{
             <SafeAreaView style={{flex:1,backgroundColor:'#f7f7f7'}}>
                 <View style={styles.container}>
                     <SectionList renderSectionHeader={this.sectionItem}// 每个section的头
-                        sections = {sections}
+                        sections={sections}
                         ItemSeparatorComponent={this.separator}// 分割线
                         keyExtractor={(item,index)=>index.toString()}
-                    >
-                    </SectionList>
+                    />
                 </View>
             </SafeAreaView>
         )
@@ -102,29 +98,29 @@ export default class ThirdPage extends Component<Props>{
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        flexDirection:'column',
+    container: {
+        flex: 1,
+        flexDirection: 'column',
         backgroundColor: '#f7f7f7'
     },
-    imgView:{
-        backgroundColor:'white',
+    imgView: {
+        backgroundColor: 'white',
         flexDirection: 'row',
-        alignItems:'center',
-        height:100,
-        justifyContent:'flex-start'
+        alignItems: 'center',
+        height: 100,
+        justifyContent: 'flex-start'
     },
-    itemView:{
-        backgroundColor:'white',
+    itemView: {
+        backgroundColor: 'white',
         flexDirection: 'row',
-        alignItems:'center',
-        height:50,
+        alignItems: 'center',
+        height: 50,
     },
-    itemV:{
-        backgroundColor:'white',
+    itemV: {
+        backgroundColor: 'white',
         flexDirection: 'row',
-        alignItems:'center',
-        height:50,
-        justifyContent:'center'
+        alignItems: 'center',
+        height: 50,
+        justifyContent: 'center'
     },
 });
