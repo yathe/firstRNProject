@@ -7428,6 +7428,11 @@ react-native-scrollable-tab-view@^0.10.0:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
 
+react-native-simple-modal@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.npm.taobao.org/react-native-simple-modal/download/react-native-simple-modal-9.0.1.tgz#a753e9493f4bfcd8b9bf7812faaa56336bf56bde"
+  integrity sha1-p1PpST9L/Ni5v3gS+qpWM2v1a94=
+
 react-native-status-bar-height@^2.2.0:
   version "2.3.1"
   resolved "https://registry.npm.taobao.org/react-native-status-bar-height/download/react-native-status-bar-height-2.3.1.tgz#b92ce9112c2367290847ac11284d9d84a6330169"

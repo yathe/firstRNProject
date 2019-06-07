@@ -65,7 +65,7 @@ export default function comments(state = initialState, action) {
                         'likeCount': 0,
                         'comment': action.comment,
                         'didClickLike': false,
-                        'id': state.data.length>=1 ? state.data[state.data.length - 1].id + 1 : 0,
+                        'id': state.data.length >= 1 ? state.data[state.data.length - 1].id + 1 : 0,
                     }
                 ]
             };
@@ -114,7 +114,7 @@ export default function comments(state = initialState, action) {
                     ...state.data.slice(0, replyToIndex),
                     {
                         ...replyItem,
-                        reply: replyItem.reply ? [...replyItem.reply, {comment: action.comment, replyToId: action.index}] :[{comment: action.comment, replyToId: action.index}]
+                        reply: replyItem ? (replyItem.reply ? [...replyItem.reply, {comment: action.comment, replyToId: action.index}] : [{comment: action.comment, replyToId: action.index}] ) : [{comment: action.comment, replyToId: action.index}]
                     },
                     ...state.data.slice(replyToIndex + 1,)
                 ]

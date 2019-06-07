@@ -13,13 +13,14 @@ import {
     TextInput,
     KeyboardAvoidingView,
     Dimensions,
+    Clipboard,
 } from 'react-native';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import CustomTabBar from '../../tool/CustomTabBar';
 import imgStore from '../../tool/ImgStore';
 import {addComment, deleteComment, updateItemLikeNum, updateLikeNum, addTransmitNum, addReply} from "../../actions/CommentAction";
 import {connect} from 'react-redux';
-import Modal from 'react-native-modal';
+import Modal from 'react-native-simple-modal';
 
 const actionArr = [
     require('../../pictures/zan.png'),
@@ -163,16 +164,14 @@ class WeatherDetail extends Component<Props> {
                     <View style={{marginTop: 5, flexDirection: 'row'}}>
                         <TouchableOpacity onPress={() => {
                             this.toggleModel();
-                            this.becomeActive();
                             this.setState({
                                 replyToId: item.id,
                                 itemId: item.id,
-                                clipboardText: item.comment,
+                                clipText: item.comment,
                             })
                         }}>
                             <Text>{item.comment}</Text>
                         </TouchableOpacity>
-
                     </View>
                     {view}
                 </View>
@@ -210,13 +209,15 @@ class WeatherDetail extends Component<Props> {
         const {navigation} = this.props;
         let len = this.props.commentData.length;
         this.props.commentData.forEach((it) => {
-            if (it.reply) {//模糊搜索
+            if (it.reply) {
                 len += it.reply.length;
             }
         });
 
         return(
+            <View style={styles.container}>
             <SafeAreaView style={styles.container}>
+
                 <KeyboardAvoidingView behavior={'position'}>
                     <ScrollView bounces={false}
                         scrollEventThrottle={1}
@@ -248,7 +249,7 @@ class WeatherDetail extends Component<Props> {
                                             bounces={false}
                                             scrollEventThrottle={1}
                                             showsVerticalScrollIndicator={false}
-                                            keyboardDismissMode={true}
+                                            // keyboardDismissMode={true}
                                         >
                                             <View style={styles.detailBgView}>
                                                 <Image style={{width: 230, height: 180, marginTop: 20, marginLeft: 20}}
@@ -339,24 +340,36 @@ class WeatherDetail extends Component<Props> {
                             })}
                         </ScrollableTabView>
                     </ScrollView>
-                    <Modal isVisible={this.state.isModalVisible}>
-                        <View style={styles.modelView}>
-                            <TouchableOpacity style={{height: 50}} onPress={() => {
-                                this.setState({isModalVisible: false, isReplyDetail: true});
-                                this.becomeActive();
-                            }}>
-                                <Text style={styles.modalTextView}>回复评论</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{height: 50}} onPress={() => {
-                                this.setState({isModalVisible: false});
-                                this.props.deleteCommentById(this.state.itemId);
-                            }}>
-                                <Text style={styles.modalTextView}>删除评论</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </Modal>
                 </KeyboardAvoidingView>
             </SafeAreaView>
+                <Modal open={this.state.isModalVisible}
+                    containerStyle={{justifyContent: 'center'}}
+                    modalStyle={{alignItems: 'flex-start', borderRadius: 5.0, marginLeft: 40, marginRight: 40}}
+                    closeOnTouchOutSide={true}
+                >
+                    <TouchableOpacity style={{height: 50}}
+                        onPress={() => {
+                            this.setState({isModalVisible: false});
+                            Clipboard.setString(this.state.clipText);
+                        }}>
+                        <Text style={styles.modalTextView}>复制评论</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{height: 50}}
+                        onPress={() => {
+                        this.setState({isModalVisible: false, isReplyDetail: true});
+                        this.becomeActive();
+                    }}>
+                        <Text style={styles.modalTextView}>回复评论</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{height: 50}}
+                        onPress={() => {
+                        this.setState({isModalVisible: false});
+                        this.props.deleteCommentById(this.state.itemId);
+                    }}>
+                        <Text style={styles.modalTextView}>删除评论</Text>
+                    </TouchableOpacity>
+                </Modal>
+            </View>
         )
     }
 }
@@ -440,15 +453,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         fontSize: 18,
-    },
-    modelView: {
-        borderRadius: 5.0,
-        position: 'absolute',
-        left: 30,
-        right: 30,
-        height: 100,
-        alignSelf: 'center',
-        backgroundColor: 'white'
     },
     modalTextView: {
         fontSize: 18,
