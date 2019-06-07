@@ -34,3 +34,12 @@ export function addTransmitNum () {
         type: types.ADDTRANSMITNUM,
     }
 }
+
+export function addReply(id, index, comment) {
+    return {
+        type: types.ADDREPLY,
+        id,
+        index,
+        comment,
+    }
+}

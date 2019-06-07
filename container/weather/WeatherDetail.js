@@ -12,12 +12,14 @@ import {
     FlatList,
     TextInput,
     KeyboardAvoidingView,
+    Dimensions,
 } from 'react-native';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import CustomTabBar from '../../tool/CustomTabBar';
 import imgStore from '../../tool/ImgStore';
-import {addComment, deleteComment, updateItemLikeNum, updateLikeNum, addTransmitNum} from "../../actions/CommentAction";
+import {addComment, deleteComment, updateItemLikeNum, updateLikeNum, addTransmitNum, addReply} from "../../actions/CommentAction";
 import {connect} from 'react-redux';
+import Modal from 'react-native-modal';
 
 const actionArr = [
     require('../../pictures/zan.png'),
@@ -27,17 +29,6 @@ const actionArr = [
 ];
 let dimensions = require('Dimensions');
 let {screenWidth, screenHeight} = dimensions.get('window');
-let ImagePicker = require('react-native-image-picker');
-let options = {
-    title: '请选择图片来源',
-    cancelButtonTitle: '取消',
-    takePhotoButtonTitle: '拍照',
-    chooseFromLibraryButtonTitle: '相册图片',
-    storageOptions: {
-        skipBackup: true,
-        path: 'images',
-    }
-};
 
 class WeatherDetail extends Component<Props> {
     static navigationOptions = {
@@ -50,7 +41,15 @@ class WeatherDetail extends Component<Props> {
             loaded: false,
             week: [],
             hasImg: false,
+            isModalVisible: false,
+            replyToId: 0,
         }
+    }
+
+    toggleModel = () => {
+        this.setState({
+            isModalVisible: !this.state.isModelVisible,
+        })
     }
 
     fetchData = () => {
@@ -91,6 +90,7 @@ class WeatherDetail extends Component<Props> {
                 this.scrollView.scrollToEnd({animated: true});// 平滑地滚动到视图底部
                 break;
             case 2:
+                alert('转发数加一');
                 this.props.addTransmitNum();
                 break;
             case 3:
@@ -107,37 +107,50 @@ class WeatherDetail extends Component<Props> {
         if (str >= 0 && str <= 9) {
             return  '0' + str;
         }
-        return str
+        return str;
     }
 
     search = () => {
-        let time = new Date();
-        let hour = time.getHours().toString();
-        let minute = time.getMinutes().toString();
-        this.props.addCommentByDetail(this.adjustFormat(hour) + ':' + this.adjustFormat(minute), this.state.text);
-        this.setState({
-            text: '',
-            hasImg: false,
-        })
+        if (!this.state.isReplyDetail) {
+            let time = new Date();
+            let hour = time.getHours().toString();
+            let minute = time.getMinutes().toString();
+            this.props.addCommentByDetail(this.adjustFormat(hour) + ':' + this.adjustFormat(minute), this.state.text);
+            this.setState({
+                text: '',
+            });
+        } else {
+           this.props.addReplyByDetail(this.state.itemId, this.state.replyToId, this.state.text);
+           this.setState({
+               isReplyDetail: false,
+               text: '',
+           });
+        }
     }
 
-    choosePic = () => {
-        ImagePicker.showImagePicker(options, (response => {
-            if (response.didCancel) {
-                alert('cancel');
-            } else if (response.error) {
-                alert('error');
-            } else {
-                let source = {uri: response.uri};
-                this.setState({
-                    hasImg: true,
-                    avatarSource: source,
-                })
-            }
-        }))
+    becomeActive = () => {
+        this.textInput.focus();
     }
 
     renderItem = ({item}) => {
+        // 根据是否有值控制组件是否显示
+        let view = item.reply ?
+            <View style={{marginLeft: 10}}>
+                {item.reply.map((detail, index) => {
+                    const replyFromIndex = this.props.commentData.findIndex(({id}) => id === detail.replyFromId);
+                    const replyToIndex = this.props.commentData.findIndex(({id}) => id === detail.replyToId);
+                    let str = this.props.commentData[replyFromIndex] ? this.props.commentData[replyFromIndex].personId : 'k';
+                    let toStr = this.props.commentData[replyToIndex] ? this.props.commentData[replyToIndex].personId : item.personId;
+                    return (
+                        <TouchableOpacity style={{marginTop: 2}} key={index} onPress={() => {
+                            this.setState({replyToId:replyFromIndex ? replyFromIndex : index, itemId: item.id, isReplyDetail: true});
+                            this.becomeActive();
+                        }}>
+                            <Text><Text style={{color: 'blue'}}>{str}</Text>回复<Text style={{color: 'blue'}}>{toStr}</Text>:{detail.comment}</Text>
+                        </TouchableOpacity>
+                    )
+                })}
+            </View> : null;
         return (
             <View style={styles.cellView}>
                 <Image source={item.img}
@@ -149,16 +162,19 @@ class WeatherDetail extends Component<Props> {
                     <Text style={{color:'gray', marginTop: 5}}>{item.time}</Text>
                     <View style={{marginTop: 5, flexDirection: 'row'}}>
                         <TouchableOpacity onPress={() => {
-
-                        }}>
-                            <Text style={this.state.hasImg && this.state.avatarSource ? {color: 'blue'} : {width: 0}}>查看图片</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {
-
+                            this.toggleModel();
+                            this.becomeActive();
+                            this.setState({
+                                replyToId: item.id,
+                                itemId: item.id,
+                                clipboardText: item.comment,
+                            })
                         }}>
                             <Text>{item.comment}</Text>
                         </TouchableOpacity>
+
                     </View>
+                    {view}
                 </View>
                 <View style={{position: 'absolute', right: 10, flexDirection: 'row', top: 15}}>
                     <Text>{item.likeCount > 0 ? item.likeCount : ''}</Text>
@@ -172,7 +188,6 @@ class WeatherDetail extends Component<Props> {
                     </TouchableOpacity>
                     <TouchableOpacity style={{marginLeft: 20, }} onPress={() => {
                         alert('点击了转发');
-                        this.props.deleteCommentById(item.id);
                     }}>
                         <Image source={require('../../pictures/share.png')}
                             resizeMode='contain'
@@ -193,6 +208,12 @@ class WeatherDetail extends Component<Props> {
             )
         }
         const {navigation} = this.props;
+        let len = this.props.commentData.length;
+        this.props.commentData.forEach((it) => {
+            if (it.reply) {//模糊搜索
+                len += it.reply.length;
+            }
+        });
 
         return(
             <SafeAreaView style={styles.container}>
@@ -204,15 +225,11 @@ class WeatherDetail extends Component<Props> {
                         ref={ref => this.scrollView = ref}
                     >
                         <View style={{flexDirection: 'row', marginTop: 15, justifyContent: 'space-between', paddingRight: 15, paddingLeft: 15}}>
-                            <TouchableOpacity onPress={() => {
-                                navigation.goBack()
-                            }}>
+                            <TouchableOpacity onPress={() => {navigation.goBack()}}>
                                 <Text style={{fontSize: 17, color: 'white'}}> 返回 </Text>
                             </TouchableOpacity>
                             <Text style={{fontSize: 17, color: 'white'}}>{this.props.navigation.state.params.title}</Text>
-                            <TouchableOpacity onPress={() => {
-                                alert('点击了分享')
-                            }}>
+                            <TouchableOpacity onPress={() => {alert('点击了分享')}}>
                                 <Text style={{fontSize: 17, color: 'white'}}>分享</Text>
                             </TouchableOpacity>
                         </View>
@@ -290,7 +307,7 @@ class WeatherDetail extends Component<Props> {
                                                     <Text style={{marginLeft: 20}}>赞</Text>
                                                     <Text style={{marginLeft: 8}}>{this.props.likeNum}</Text>
                                                     <Text style={{marginLeft: 20}}>评论</Text>
-                                                    <Text style={{marginLeft: 8}}>{this.props.commentData.length}</Text>
+                                                    <Text style={{marginLeft: 8}}>{len}</Text>
                                                     <View style={{position:'absolute', right: 20, flexDirection: 'row'}}>
                                                         <Text style={{marginRight: 8}}>转发</Text>
                                                         <Text>{this.props.transmitNum}</Text>
@@ -309,80 +326,35 @@ class WeatherDetail extends Component<Props> {
                                             <Image source={require('../../pictures/pic.png')}
                                                 style={{marginLeft: 10, width: 50, height: 50, borderRadius: 25,}}
                                             />
-                                            <TextInput style={styles.searchText}
-                                                 onChangeText={(text) => this.setState({text})}
-                                                 onSubmitEditing={this.search}
-                                                 placeholder='添加评论...'
-                                                 value={this.state.text}
+                                            <TextInput ref={ref => this.textInput = ref}
+                                                style={styles.searchText}
+                                                onChangeText={(text) => this.setState({text})}
+                                                onSubmitEditing={this.search}
+                                                placeholder='添加评论...'
+                                                value={this.state.text}
                                             />
-
                                         </View>
-
-
-
-
-
-
-                                        {/*<View onLayout={e => this.setState({scrollViewHeight: e.nativeEvent.layout.y})}/>*/}
-                                        {/*<View style={styles.expendCommentArea}>*/}
-                                        {/*    <View style={{flexDirection: 'row',}}>*/}
-
-                                        {/*    <Image style={{width: this.state.hasImg ? 65 : 0, height: 70, marginLeft: this.state.avatarSource != '' ? 10 : 0, marginTop: 10,}}*/}
-                                        {/*        source={this.state.avatarSource}*/}
-                                        {/*    />*/}
-                                        {/*        <TouchableOpacity onPress={() => {*/}
-                                        {/*            this.setState({*/}
-                                        {/*                hasImg: false,*/}
-                                        {/*            })*/}
-                                        {/*        }}>*/}
-                                        {/*            <Image style={{width: this.state.hasImg ? 20 : 0, height: 20,  marginLeft: -23, marginTop: 12,}}*/}
-                                        {/*                source={require('../../pictures/deleteImg.png')}*/}
-                                        {/*            />*/}
-                                        {/*        </TouchableOpacity>*/}
-                                        {/*    <TextInput multiline={true} // 允许多行文本*/}
-                                        {/*        maxLength={140} // 限制最多字符数为140*/}
-                                        {/*        onChangeText={(text) => this.setState({text})}*/}
-                                        {/*        placeholder='添加评论...'  // 占位文字*/}
-                                        {/*        value={this.state.text}   // 默认文字*/}
-                                        {/*        style={{fontSize: 18, marginLeft: 10, marginTop: 10, height: 85, paddingTop: 10, paddingRight: 10}}*/}
-                                        {/*    />*/}
-                                        {/*    </View>*/}
-                                        {/*    <View style={styles.operationView}>*/}
-                                        {/*        <Image source={require('../../pictures/pic.png')}*/}
-                                        {/*            style={{marginLeft: 15, width: 20, height: 20}}*/}
-                                        {/*        />*/}
-                                        {/*        <TouchableOpacity style={{marginLeft: 10}}*/}
-                                        {/*            onPress={() => {*/}
-                                        {/*                this.choosePic();*/}
-                                        {/*            }}*/}
-                                        {/*        >*/}
-                                        {/*            <Image source={require('../../pictures/tupian.png')}*/}
-                                        {/*                style={{width: 20, height: 20,}}*/}
-                                        {/*                resizeMode='contain'*/}
-                                        {/*            />*/}
-                                        {/*        </TouchableOpacity>*/}
-                                        {/*        <Text style={{right: 40, position: 'absolute', color: 'gray'}}>140</Text>*/}
-                                        {/*        <TouchableOpacity style={{ right: 10, position: 'absolute'}}*/}
-                                        {/*            onPress={() => {*/}
-                                        {/*                this.search()*/}
-                                        {/*            }}*/}
-                                        {/*        >*/}
-                                        {/*            <Image source={require('../../pictures/zhifeiji-2.png')}*/}
-                                        {/*                style={{ width: 20, height: 20,}}*/}
-                                        {/*                resizeMode='contain'*/}
-                                        {/*            />*/}
-                                        {/*        </TouchableOpacity>*/}
-
-
-                                        {/*    </View>*/}
-                                        {/*</View>*/}
                                     </View>
-
                                 )
                             })}
-
                         </ScrollableTabView>
                     </ScrollView>
+                    <Modal isVisible={this.state.isModalVisible}>
+                        <View style={styles.modelView}>
+                            <TouchableOpacity style={{height: 50}} onPress={() => {
+                                this.setState({isModalVisible: false, isReplyDetail: true});
+                                this.becomeActive();
+                            }}>
+                                <Text style={styles.modalTextView}>回复评论</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{height: 50}} onPress={() => {
+                                this.setState({isModalVisible: false});
+                                this.props.deleteCommentById(this.state.itemId);
+                            }}>
+                                <Text style={styles.modalTextView}>删除评论</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Modal>
                 </KeyboardAvoidingView>
             </SafeAreaView>
         )
@@ -456,6 +428,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         position: 'absolute',
         bottom: 0,
+        // marginTop: 10
     },
     img: {
         marginLeft: 10,
@@ -468,18 +441,20 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 18,
     },
-    expendCommentArea: {
-        // position: 'absolute',
-        // paddingBottom: 0,
-        marginTop: 10,
-        flexDirection: 'column',
-        backgroundColor: 'white',
+    modelView: {
+        borderRadius: 5.0,
+        position: 'absolute',
+        left: 30,
+        right: 30,
+        height: 100,
+        alignSelf: 'center',
+        backgroundColor: 'white'
     },
-    operationView: {
-        flexDirection: 'row',
-        marginTop: 10,
-        paddingBottom: 10,
-    },
+    modalTextView: {
+        fontSize: 18,
+        marginLeft: 15,
+        marginTop: 13,
+    }
 })
 
 const mapStateToProps = state => ({
@@ -504,6 +479,9 @@ const mapDispatchToProps = dispatch => ({
     },
     addTransmitNum: () => {
         dispatch(addTransmitNum())
+    },
+    addReplyByDetail: (id, index, comment) => {
+        dispatch(addReply(id, index, comment))
     },
 })
 
